@@ -7,6 +7,7 @@ export const  PrinterHiveTheme = {
   colors: {
     primary: '#FFC107', // Honey yellow
     secondary: '#FFB300', // Darker honey yellow
+    background: "#1e1e1e",
     info: '#FFEB3B', // Light yellow
     success: '#4CAF50', // Green
     accent: '#FF8F00', // Orange
@@ -45,5 +46,6 @@ export const LightPrinterHiveTheme = {
     ...PrinterHiveTheme.colors,
     containerBg: '#FFFFFF', // Light background
     surface: '#F5F5F5', // Light surface
+    background: "#ffffff",
   }
 }

@@ -14,6 +14,7 @@
                 color="primary"
                 variant="elevated"
                 class="mr-4"
+                to="/features"
             >
                 Explore Features
                 <v-icon right class="ml-2">mdi-arrow-right</v-icon>
@@ -23,7 +24,7 @@
                 size="x-large"
                 variant="outlined"
                 class="ml-4"
-                @click="startDemo"
+                to="/demo"
             >
                 Try Demo
                 <v-icon right class="ml-2">mdi-play</v-icon>
@@ -53,7 +54,7 @@
   <script lang="ts">
   import { defineComponent } from 'vue';
   
-  interface Stat {
+  export interface Stat {
     value: string;
     label: string;
   }
@@ -69,13 +70,6 @@
           { value: '99.9%', label: 'Uptime' },
         ] as Stat[],
       };
-    },
-  
-    methods: {
-      startDemo(): void {
-        //TODO: REDIRECT TO DEMOPAGE
-     
-      },
     },
   });
   </script>

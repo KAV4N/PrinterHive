@@ -1,5 +1,5 @@
 <template>
-    <v-container class="text-center py-6 bg-secondary rounded-lg">
+    <v-container class="text-center py-6 bg-secondary rounded-lg ">
       <h3 class="text-h5 text-lightprimary mb-4">Ready to Get Started?</h3>
       <v-btn
                 size="x-large"

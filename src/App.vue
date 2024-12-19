@@ -1,8 +1,11 @@
 <template>
-  <BVAmbientBackground />
+
   <v-app>
     <Header />
-    <RouterView />
+    <BVAmbientBackground />
+    <v-main>
+      <RouterView />
+    </v-main>
     <Footer />
   </v-app>
 </template>
