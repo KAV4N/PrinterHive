@@ -42,22 +42,21 @@
     },
     data() {
       return {
-        timer: null as number | null,
+        printerStore: usePrinterStore()
       };
     },
     computed: {
       chartOption() {
-        const store = usePrinterStore();
         const now = Date.now();
         const fiveMinutesAgo = now - 5 * 60 * 1000;
   
-        const currentLayer = Math.floor(store.position.z / store.layerHeight);
+        const currentLayer = Math.floor(this.printerStore.position.z / this.printerStore.layerHeight);
         const layerData = [];
   
         for (let i = 0; i <= currentLayer; i++) {
           layerData.push([
             now - (currentLayer - i) * 1000,
-            i * store.layerHeight,
+            i * this.printerStore.layerHeight,
           ]);
         }
         
@@ -69,7 +68,7 @@
               const time = formatTime(new Date(params[0].value[0]));
               return `Time: ${time}<br/>
                       Layer Height: ${params[0].value[1].toFixed(2)}mm<br/>
-                      Temperature: ${store.toolTemperature.toFixed(1)}°C`;
+                      Temperature: ${this.printerStore.toolTemperature.toFixed(1)}°C`;
             }
           },
           xAxis: {
@@ -92,7 +91,7 @@
             name: 'Layer Height (mm)',
             nameLocation: 'middle',
             nameGap: 40,
-            max: Math.max(currentLayer * store.layerHeight, 1),
+            max: Math.max(currentLayer * this.printerStore.layerHeight, 1),
             axisLabel: {
                 formatter: (value: number) => value.toFixed(2) 
             }

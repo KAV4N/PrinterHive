@@ -52,11 +52,14 @@
   
   export default defineComponent({
     name: 'ExtrusionControl',
-
+    data() {
+    return {
+      printerStore: usePrinterStore()
+    };
+  },
     computed: {
     isPrinting(): boolean {
-      const printerStore = usePrinterStore();
-      return printerStore.printing;
+      return this.printerStore.printing;
     }
   },
   });

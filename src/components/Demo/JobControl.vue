@@ -29,15 +29,16 @@
     </v-card>
   </template>
   
-  <script lang="ts">
+<script lang="ts">
   import { defineComponent } from 'vue';
   import { usePrinterStore } from '@/stores/printer';
 
   export default defineComponent({
     name: 'JobControl',
-    setup() {
-      const printerStore = usePrinterStore();
-      return { printerStore };
-    }
-  });
-  </script>
+    data() {
+    return {
+      printerStore: usePrinterStore()
+    };
+  },
+});
+</script>

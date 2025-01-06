@@ -45,10 +45,11 @@ import { usePrinterStore } from '@/stores/printer';
 
 export default defineComponent({
   name: 'StatusPanel',
-  setup() {
-    const printerStore = usePrinterStore();
-    return { printerStore };
-  }
+  data() {
+    return {
+      printerStore: usePrinterStore()
+    };
+  },
 });
 </script>
 

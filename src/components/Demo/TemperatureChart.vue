@@ -42,13 +42,11 @@ export default defineComponent({
   },
   data() {
     return {
-      timer: null as number | null,
+      printerStore: usePrinterStore()
     };
   },
   computed: {
     chartOption() {
-      const store = usePrinterStore();
-
       const now = Date.now();
       const fiveMinutesAgo = now - 5 * 60 * 1000;
       
@@ -91,7 +89,7 @@ export default defineComponent({
           {
             name: 'Tool Temperature',
             type: 'line',
-            data: store.toolHistory.map(point => [point.timestamp, point.value]),
+            data: this.printerStore.toolHistory.map(point => [point.timestamp, point.value]),
             smooth: true,
             showSymbol: false,
             itemStyle: {
@@ -101,7 +99,7 @@ export default defineComponent({
           {
             name: 'Bed Temperature',
             type: 'line',
-            data: store.bedHistory.map(point => [point.timestamp, point.value]),
+            data: this.printerStore.bedHistory.map(point => [point.timestamp, point.value]),
             smooth: true,
             showSymbol: false,
             itemStyle: {

@@ -67,32 +67,30 @@ export default defineComponent({
   name: 'MovementControl',
   data() {
     return {
-      axes: ['x', 'y', 'z'] as Axis[] 
+      axes: ['x', 'y', 'z'] as Axis[],
+      printerStore: usePrinterStore()
     };
   },
   computed: {
     isPrinting(): boolean {
-      const printerStore = usePrinterStore();
-      return printerStore.printing;
+      return this.printerStore.printing;
     }
+
   },
   methods: {
     moveAxis(axis: Axis, value: number) {
       if (this.isPrinting) return;
-      const positionStore = usePrinterStore();
-      positionStore.updatePosition(axis, value);
+      this.printerStore.updatePosition(axis, value);
     },
 
     homeAxis(axis: Axis) {
       if (this.isPrinting) return;
-      const positionStore = usePrinterStore();
-      positionStore.updatePosition(axis, -positionStore.position[axis]);
+      this.printerStore.updatePosition(axis, -this.printerStore.position[axis]);
     },
 
     homeAll() {
       if (this.isPrinting) return;
-      const positionStore = usePrinterStore();
-      positionStore.resetPosition();
+      this.printerStore.resetPosition();
     }
   }
 });

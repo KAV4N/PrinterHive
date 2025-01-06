@@ -12,11 +12,11 @@
           <v-list-item-title>Tool 0</v-list-item-title>
           <template v-slot:append>
             <div class="d-flex align-center">
-              <span class="mr-2">{{ store.toolTemperature.toFixed(1) }}°C</span>
+              <span class="mr-2">{{ printerStore.toolTemperature.toFixed(1) }}°C</span>
               <div class="text-center">
                 <span class="d-block mb-1">Standby</span> 
                 <v-text-field
-                  :model-value="store.toolTarget"
+                  :model-value="printerStore.toolTarget"
                   type="number"
                   density="compact"
                   hide-details
@@ -37,9 +37,9 @@
           <v-list-item-title>Bed</v-list-item-title>
           <template v-slot:append>
             <div class="d-flex align-center">
-              <span class="mr-2">{{ store.bedTemperature.toFixed(1) }}°C</span>
+              <span class="mr-2">{{ printerStore.bedTemperature.toFixed(1) }}°C</span>
               <v-text-field
-                :model-value="store.bedTarget"
+                :model-value="printerStore.bedTarget"
                 type="number"
                 density="compact"
                 hide-details
@@ -63,14 +63,14 @@ import { usePrinterStore } from '@/stores/printer';
 
 export default defineComponent({
   name: 'HeaterControl',
-  setup() {
-    const store = usePrinterStore();
-    return { store };
+  data() {
+    return {
+      printerStore: usePrinterStore()
+    };
   },
   computed: {
     isPrinting(): boolean {
-      const printerStore = usePrinterStore();
-      return printerStore.printing;
+      return this.printerStore.printing;
     }
   },
   methods: {
@@ -79,14 +79,14 @@ export default defineComponent({
       if (isNaN(numValue)) numValue = 0;
       if (numValue < 0) numValue = 0;
       if (numValue > 500) numValue = 500;
-      this.store.setToolTarget(numValue);
+      this.printerStore.setToolTarget(numValue);
     },
     updateBedTarget(value: string) {
       let numValue = Number(value);
       if (isNaN(numValue)) numValue = 0;
       if (numValue < 0) numValue = 0;
       if (numValue > 500) numValue = 500;
-      this.store.setBedTarget(numValue);
+      this.printerStore.setBedTarget(numValue);
     },
   },
 });

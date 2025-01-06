@@ -52,14 +52,14 @@ export default defineComponent({
   data() {
     return {
       activeTab: 0,
-      timer: null as number | null
+      timer: null as number | null,
+      printerStore: usePrinterStore()
     };
   },
   mounted() {
-    const store = usePrinterStore();
     this.timer = setInterval(() => {
-      store.updateTemperatures();
-      store.simulatePrinting(30);
+      this.printerStore.updateTemperatures();
+      this.printerStore.simulatePrinting(30);
     }, 1000);
   },
   beforeUnmount() {
