@@ -1,5 +1,5 @@
 <template>
-    <v-card class="ma-2">
+    <v-card class="ma-2 pa-4">
       <v-card-title class="text-subtitle-1">Extrusion Control</v-card-title>
       <v-card-text>
         <div class="d-flex flex-column flex-md-row align-center justify-space-between">
@@ -12,6 +12,7 @@
                 variant="outlined"
                 size="small"
                 class="mx-1"
+                :disabled="isPrinting"
               >
                 {{ amount }}
               </v-btn>
@@ -26,16 +27,17 @@
                 variant="outlined"
                 size="small"
                 class="mx-1"
+                :disabled="isPrinting"
               >
                 {{ rate }}
               </v-btn>
             </div>
           </div>
           <div class="d-flex flex-column align-end mt-4 mt-md-0">
-            <v-btn color="error" class="mx-1 mb-2">
+            <v-btn color="error" class="mx-1 mb-2"  :disabled="isPrinting">
               Retract
             </v-btn>
-            <v-btn color="success" class="mx-1">
+            <v-btn color="success" class="mx-1"  :disabled="isPrinting">
               Extrude
             </v-btn>
           </div>
@@ -46,9 +48,17 @@
   
   <script lang="ts">
   import { defineComponent } from 'vue';
+  import { usePrinterStore } from '@/stores/printer';
   
   export default defineComponent({
     name: 'ExtrusionControl',
+
+    computed: {
+    isPrinting(): boolean {
+      const printerStore = usePrinterStore();
+      return printerStore.printing;
+    }
+  },
   });
   </script>
   

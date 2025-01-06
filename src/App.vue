@@ -2,8 +2,9 @@
 
   <v-app>
     <Header />
-    <BVAmbientBackground />
+
     <v-main>
+
       <RouterView />
     </v-main>
     <Footer />

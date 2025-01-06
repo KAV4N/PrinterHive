@@ -1,5 +1,6 @@
 
 <template>
+      <BVAmbientBackground />
     <v-container>
       <WelcomeSection />
       <PromoSection />
@@ -21,6 +22,7 @@ import FeaturesSection from '@/components/Home/FeaturesSection.vue';
 import PromoSection from '@/components/Home/PromoSection.vue';
 import TestimonialsSection from '@/components/Home/TestimonialsSection.vue';
 import CallToActionSection from '@/components/Home/CallToActionSection.vue';
+import BVAmbientBackground from '@/components/Common/BVAmbientBackground.vue';
 
 interface FeatureTab {
   title: string;
@@ -44,6 +46,8 @@ export default defineComponent({
     PromoSection,
     TestimonialsSection,
     CallToActionSection,
+    BVAmbientBackground
+
   },
   data() {
     return {
