@@ -36,7 +36,7 @@ import MovementControl from '@/components/Demo/MovementControl.vue';
 import ExtrusionControl from '@/components/Demo/ExtrusionControl.vue';
 import JobControl from '@/components/Demo/JobControl.vue';
 import LayerChart from '@/components/Demo/LayerChart.vue';
-
+import { usePrinterStore } from '@/stores/printer';
 
 export default defineComponent({
   name: 'PrinterControlView',
@@ -52,7 +52,20 @@ export default defineComponent({
   data() {
     return {
       activeTab: 0,
+      timer: null as number | null
     };
   },
+  mounted() {
+    const store = usePrinterStore();
+    this.timer = setInterval(() => {
+      store.updateTemperatures();
+      store.simulatePrinting(30);
+    }, 1000);
+  },
+  beforeUnmount() {
+    if (this.timer !== null) {
+      clearInterval(this.timer);
+    }
+  }
 });
 </script>

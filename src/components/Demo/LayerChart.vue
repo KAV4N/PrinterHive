@@ -127,17 +127,6 @@
         };
       },
     },
-    mounted() {
-      const store = usePrinterStore();
-      this.timer = window.setInterval(() => {
-        store.updateTemperatures();
-      }, 1000);
-    },
-    beforeUnmount() {
-      if (this.timer !== null) {
-        clearInterval(this.timer);
-      }
-    }
   });
   </script>
   

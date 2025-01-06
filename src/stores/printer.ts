@@ -32,9 +32,10 @@ export interface CombinedPrinterState {
 	totalLayers: number;
 
 	layerHeight: number;
+
+    currentStep: number;
 }
 
-//TODO: SAVE TO LOCAL STORAGE
 
 export const usePrinterStore = defineStore('printer', {
 	state: (): CombinedPrinterState => ({
@@ -55,14 +56,19 @@ export const usePrinterStore = defineStore('printer', {
 		mcuTemperature: 38.3,
 		toolTemperature: 24.0,
 		bedTemperature: 23.5,
+        
 		toolTarget: 0,
 		bedTarget: 0,
+
 		toolHistory: [],
 		bedHistory: [],
 		roomTemperature: 23.0,
 		currentLayer: 0,
 		totalLayers: 100,
-		layerHeight: 0.2
+		layerHeight: 0.2,
+
+        currentStep: 0
+
 	}),
 
 	actions: {
@@ -80,12 +86,14 @@ export const usePrinterStore = defineStore('printer', {
 
 		startPrint() {
 			this.printing = true;
+            this.bedTarget = 50;
+            this.toolTarget = 200;
 			this.resetValues();
-			this.simulatePrinting();
 		},
 
 		stopPrint() {
 			this.printing = false;
+            this.currentStep = 0;
 			this.speeds = {
 				x: 0,
 				y: 0,
@@ -108,46 +116,41 @@ export const usePrinterStore = defineStore('printer', {
 			this.currentLayer = 0;
 		},
 
-		simulatePrinting() {
-			const duration = 30000;
-			const interval = 100;
-			const steps = duration / interval;
-			let currentStep = 0;
+		simulatePrinting(steps: number) 
+        {
 
-			const timer = setInterval(() => {
-				if (!this.printing || currentStep >= steps) {
-					clearInterval(timer);
-					this.stopPrint();
-					return;
-				}
-
-				this.position.x += (Math.random() - 0.5) * 2;
-				this.position.y += (Math.random() - 0.5) * 2;
-
-				if (currentStep % 10 === 0) {
-					this.position.z += this.layerHeight;
-					this.currentLayer = Math.floor(this.position.z / this.layerHeight);
-				}
-
-				this.speeds.x = Math.abs(Math.sin(currentStep) * 50);
-				this.speeds.y = Math.abs(Math.cos(currentStep) * 50);
-				this.speeds.z = this.currentLayer === Math.floor(this.position.z / this.layerHeight) ? 0 : 5;
-
-				this.extruderDrive += 0.1;
-
-				this.toolTemperature = this.calculateNewTemperature(this.toolTemperature, 200, 2.0);
-				this.bedTemperature = this.calculateNewTemperature(this.bedTemperature, 50, 1.0);
-
-				currentStep++;
-			}, interval);
+            if (this.printing) 
+            {
+                if (this.currentStep >= steps)
+                {
+                    this.stopPrint();
+                }
+                else
+                {
+                    this.position.x += (Math.random() - 0.5) * 2;
+                    this.position.y += (Math.random() - 0.5) * 2;
+        
+                    if (this.currentStep % 10 === 0) {
+                        this.position.z += this.layerHeight;
+                        this.currentLayer = Math.floor(this.position.z / this.layerHeight);
+                    }
+        
+                    this.speeds.x = Math.abs(Math.sin(this.currentStep) * 50);
+                    this.speeds.y = Math.abs(Math.cos(this.currentStep) * 50);
+                    this.speeds.z = this.currentLayer === Math.floor(this.position.z / this.layerHeight) ? 0 : 5;
+        
+                    this.extruderDrive += 0.1;
+                    this.currentStep++;
+                }
+            }
 		},
 
 		setToolTarget(target: number) {
-			this.toolTarget = Math.max(this.roomTemperature, target);
+			this.toolTarget = Math.max(0, target);
 		},
 
 		setBedTarget(target: number) {
-			this.bedTarget = Math.max(this.roomTemperature, target);
+			this.bedTarget = Math.max(0, target);
 		},
 
 		updateTemperatures() {

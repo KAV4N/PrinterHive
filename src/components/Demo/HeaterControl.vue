@@ -14,16 +14,17 @@
             <div class="d-flex align-center">
               <span class="mr-2">{{ store.toolTemperature.toFixed(1) }}°C</span>
               <div class="text-center">
-                <span class="d-block mb-1">Standby</span>  <!-- Added "Standby" label -->
+                <span class="d-block mb-1">Standby</span> 
                 <v-text-field
-                  v-model.number="toolTarget"
+                  :model-value="store.toolTarget"
                   type="number"
                   density="compact"
                   hide-details
                   class="temp-input"
                   min="0"
                   max="500"
-                  @change="validateToolTarget"
+                  @update:model-value="updateToolTarget"
+                  :disabled="isPrinting"
                 ></v-text-field>
               </div>
             </div>
@@ -38,14 +39,15 @@
             <div class="d-flex align-center">
               <span class="mr-2">{{ store.bedTemperature.toFixed(1) }}°C</span>
               <v-text-field
-                v-model.number="bedTarget"
+                :model-value="store.bedTarget"
                 type="number"
                 density="compact"
                 hide-details
                 class="temp-input"
                 min="0"
                 max="500"
-                @change="validateBedTarget"
+                @update:model-value="updateBedTarget"
+                :disabled="isPrinting"
               ></v-text-field>
             </div>
           </template>
@@ -61,31 +63,30 @@ import { usePrinterStore } from '@/stores/printer';
 
 export default defineComponent({
   name: 'HeaterControl',
-  data() {
-    return {
-      toolTarget: 0,
-      bedTarget: 0,
-    };
-  },
   setup() {
     const store = usePrinterStore();
     return { store };
   },
-  mounted() {
-    setInterval(() => {
-      this.store.updateTemperatures();
-    }, 1000);
+  computed: {
+    isPrinting(): boolean {
+      const printerStore = usePrinterStore();
+      return printerStore.printing;
+    }
   },
   methods: {
-    validateToolTarget() {
-      if (this.toolTarget < 0) this.toolTarget = 0;
-      if (this.toolTarget > 500) this.toolTarget = 500;
-      this.store.setToolTarget(Number(this.toolTarget));
+    updateToolTarget(value: string) {
+      let numValue = Number(value);
+      if (isNaN(numValue)) numValue = 0;
+      if (numValue < 0) numValue = 0;
+      if (numValue > 500) numValue = 500;
+      this.store.setToolTarget(numValue);
     },
-    validateBedTarget() {
-      if (this.bedTarget < 0) this.bedTarget = 0;
-      if (this.bedTarget > 500) this.bedTarget = 500;
-      this.store.setBedTarget(Number(this.bedTarget));
+    updateBedTarget(value: string) {
+      let numValue = Number(value);
+      if (isNaN(numValue)) numValue = 0;
+      if (numValue < 0) numValue = 0;
+      if (numValue > 500) numValue = 500;
+      this.store.setBedTarget(numValue);
     },
   },
 });

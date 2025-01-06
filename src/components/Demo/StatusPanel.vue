@@ -6,19 +6,19 @@
         <tbody>
           <tr>
             <td class="font-weight-bold">Tool Position</td>
-            <td>
+            <td class="pa-4">
               X: {{ printerStore.position.x.toFixed(2) }}<br>
               Y: {{ printerStore.position.y.toFixed(2) }}<br>
               Z: {{ printerStore.position.z.toFixed(2) }}
             </td>
           </tr>
-          <tr>
+          <tr >
             <td class="font-weight-bold">Extruder Drives</td>
-            <td>Drive 0: {{ printerStore.extruderDrive.toFixed(1) }}</td>
+            <td class="pa-4">Drive 0: {{ printerStore.extruderDrive.toFixed(1) }}</td>
           </tr>
           <tr>
             <td class="font-weight-bold">Speeds</td>
-            <td>
+            <td class="pa-4">
               X: {{ printerStore.speeds.x.toFixed(1) }} mm/s<br>
               Y: {{ printerStore.speeds.y.toFixed(1) }} mm/s<br>
               Z: {{ printerStore.speeds.z.toFixed(1) }} mm/s
@@ -26,7 +26,7 @@
           </tr>
           <tr>
             <td class="font-weight-bold">Sensors</td>
-            <td>
+            <td class="pa-4">
               Voltage: {{ printerStore.voltage.toFixed(1) }} V<br>
               MCU Temp: {{ printerStore.mcuTemperature.toFixed(1) }} °C<br>
               Tool 0 Temp: {{ printerStore.toolTemperature.toFixed(1) }} °C<br>
