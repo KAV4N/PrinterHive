@@ -22,6 +22,7 @@
             <layer-chart />
           </v-col>
         </v-row>
+        <v-divider></v-divider>
         <MovementControl />
         <ExtrusionControl />
   </v-container>
@@ -52,6 +53,7 @@ export default defineComponent({
   data() {
     return {
       activeTab: 0,
+      simulationCount: 30,
       timer: null as number | null,
       printerStore: usePrinterStore()
     };
@@ -59,7 +61,7 @@ export default defineComponent({
   mounted() {
     this.timer = setInterval(() => {
       this.printerStore.updateTemperatures();
-      this.printerStore.simulatePrinting(30);
+      this.printerStore.simulatePrinting(this.simulationCount);
     }, 1000);
   },
   beforeUnmount() {

@@ -7,10 +7,13 @@ import App from './App.vue'
 import router from './router'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+import axios from 'axios';
+
+
 
 const vuetify = createVuetify({
   theme: {
-    defaultTheme: 'PrinterHiveTheme',
+    defaultTheme: localStorage.getItem('theme') === 'dark' ? 'PrinterHiveTheme' : 'LightPrinterHiveTheme',
     themes: {
       PrinterHiveTheme,
       LightPrinterHiveTheme

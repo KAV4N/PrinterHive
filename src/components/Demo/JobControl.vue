@@ -1,5 +1,5 @@
 <template>
-    <v-card class="job-control pa-4 ma-2" flat>
+    <v-card class="pa-4 ma-2">
       <v-card-title class="text-h6">
         <v-icon start>mdi-wrench</v-icon>
         Job Control

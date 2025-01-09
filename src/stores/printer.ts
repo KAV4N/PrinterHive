@@ -1,40 +1,6 @@
-import {
-	defineStore
-} from 'pinia';
+import {defineStore} from 'pinia';
 
-export interface Position {
-	x: number;
-	y: number;
-	z: number;
-}
-
-export interface TemperaturePoint {
-	timestamp: number;
-	value: number;
-}
-
-export interface CombinedPrinterState {
-	position: Position;
-	printing: boolean;
-	speeds: Position;
-	extruderDrive: number;
-	voltage: number;
-	zProbe: number;
-	mcuTemperature: number;
-	toolTemperature: number;
-	bedTemperature: number;
-	toolTarget: number;
-	bedTarget: number;
-	toolHistory: TemperaturePoint[];
-	bedHistory: TemperaturePoint[];
-	roomTemperature: number;
-	currentLayer: number;
-	totalLayers: number;
-
-	layerHeight: number;
-
-    currentStep: number;
-}
+import type {CombinedPrinterState, TemperaturePoint, Position} from "@/types/printer";
 
 
 export const usePrinterStore = defineStore('printer', {
@@ -50,9 +16,10 @@ export const usePrinterStore = defineStore('printer', {
 			y: 0,
 			z: 0
 		},
+
 		extruderDrive: 0,
 		voltage: 24.0,
-		zProbe: 0,
+
 		mcuTemperature: 38.3,
 		toolTemperature: 24.0,
 		bedTemperature: 23.5,
@@ -62,9 +29,10 @@ export const usePrinterStore = defineStore('printer', {
 
 		toolHistory: [],
 		bedHistory: [],
+
 		roomTemperature: 23.0,
+
 		currentLayer: 0,
-		totalLayers: 100,
 		layerHeight: 0.2,
 
         currentStep: 0
@@ -114,6 +82,7 @@ export const usePrinterStore = defineStore('printer', {
 			};
 			this.extruderDrive = 0;
 			this.currentLayer = 0;
+			this.currentStep = 0;
 		},
 
 		simulatePrinting(steps: number) 
@@ -125,7 +94,7 @@ export const usePrinterStore = defineStore('printer', {
                 {
                     this.stopPrint();
                 }
-                else
+                else if (this.bedTemperature >= (this.bedTarget-2.5) && this.toolTemperature >= (this.toolTarget-2.5))
                 {
                     this.position.x += (Math.random() - 0.5) * 2;
                     this.position.y += (Math.random() - 0.5) * 2;
@@ -159,13 +128,13 @@ export const usePrinterStore = defineStore('printer', {
 			this.toolTemperature = this.calculateNewTemperature(
 				this.toolTemperature,
 				this.toolTarget,
-				2.0
+				25.65
 			);
 
 			this.bedTemperature = this.calculateNewTemperature(
 				this.bedTemperature,
 				this.bedTarget,
-				1.0
+				6.75
 			);
 
 			this.toolHistory.push({

@@ -34,9 +34,8 @@ const router = createRouter({
       name: 'download',
       component: DownloadView,
     },
-      
     {
-      path: '/:catchAll(.*)', // Catch all unmatched routes
+      path: '/:catchAll(.*)', 
       name: 'NotFound',
       component: NotFound,
     },

@@ -16,7 +16,7 @@ import { defineComponent } from 'vue';
 import { RouterView } from 'vue-router';
 import Header from '@/components/Common/Header.vue';
 import Footer from '@/components/Common/Footer.vue';
-import BVAmbientBackground from '@/components/Common/BVAmbientBackground.vue';
+import AmbientBackground from '@/components/Common/AmbientBackground.vue';
 
 export default defineComponent({
   name: 'App',
@@ -24,7 +24,7 @@ export default defineComponent({
     Header,
     Footer,
     RouterView,
-    BVAmbientBackground
+    AmbientBackground
   }
 });
 </script>

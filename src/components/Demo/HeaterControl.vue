@@ -14,7 +14,6 @@
             <div class="d-flex align-center">
               <span class="mr-2">{{ printerStore.toolTemperature.toFixed(1) }}°C</span>
               <div class="text-center">
-                <span class="d-block mb-1">Standby</span> 
                 <v-text-field
                   :model-value="printerStore.toolTarget"
                   type="number"
