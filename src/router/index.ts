@@ -29,10 +29,17 @@ const router = createRouter({
       name: 'about',
       component: AboutView,
     },
-    {
+{
       path: '/download',
       name: 'download',
       component: DownloadView,
+      children: [
+        {
+          path: ':slug',
+          name: 'version-details',
+          component: () => import('@/views/DownloadVersionDetailsView.vue')
+        }
+      ]
     },
     {
       path: '/:catchAll(.*)', 
