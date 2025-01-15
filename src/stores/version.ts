@@ -2,8 +2,6 @@ import { defineStore } from 'pinia';
 import axios from 'axios';
 import type { Version, PaginationMeta } from '@/types/version';
 
-const API_BASE_URL = 'http://localhost/api/versions.php';
-
 export const useVersionStore = defineStore('version', {
   state: () => ({
     latestVersion: null as Version | null,
@@ -12,7 +10,7 @@ export const useVersionStore = defineStore('version', {
     loadingMore: false,
     error: null as string | null,
     currentPage: 1,
-    hasMore: true,
+    hasMore: false
   }),
 
   actions: {
@@ -20,72 +18,64 @@ export const useVersionStore = defineStore('version', {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get<{ data: Version }>(
-          `${API_BASE_URL}?endpoint=latest`
-        );
+        const response = await axios.get('http://localhost/api/versions.php?endpoint=latest');
         this.latestVersion = response.data.data;
-      } catch (error) {
-        this.error = 'Failed to fetch latest version';
-        console.error('Error fetching latest version:', error);
+      } catch (err) {
+        this.error = 'Failed to load latest version';
+        console.error('Error fetching latest version:', err);
       } finally {
         this.loading = false;
       }
     },
 
-    async fetchPreviousVersions(page: number = 1) {
-      if (page === 1) {
-        this.loading = true;
-        this.previousVersions = [];
-      } else {
-        this.loadingMore = true;
-      }
-      
-      this.error = null;
-      
-      try {
-        const response = await axios.get<{
-          data: Version[];
-          meta: PaginationMeta;
-        }>(`${API_BASE_URL}?endpoint=previous&page=${page}&limit=5`);
-        
-        if (page === 1) {
-          this.previousVersions = response.data.data;
-        } else {
-          this.previousVersions = [...this.previousVersions, ...response.data.data];
-        }
-        
-        this.currentPage = response.data.meta.currentPage;
-        this.hasMore = response.data.meta.hasMore;
-      } catch (error) {
-        this.error = 'Failed to fetch previous versions';
-        console.error('Error fetching previous versions:', error);
-      } finally {
-        this.loading = false;
-        this.loadingMore = false;
-      }
-    },
-
-    async fetchVersionBySlug(slug: string) {
+    async fetchPreviousVersions() {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axios.get<{ data: Version }>(
-          `${API_BASE_URL}?endpoint=version&slug=${slug}`
+        const response = await axios.get(
+          `http://localhost/api/versions.php?endpoint=previous&page=${this.currentPage}`
         );
-        return response.data.data;
-      } catch (error) {
-        this.error = 'Failed to fetch version details';
-        console.error('Error fetching version details:', error);
-        return null;
+        this.previousVersions = response.data.data;
+        this.hasMore = response.data.meta.hasMore;
+      } catch (err) {
+        this.error = 'Failed to load previous versions';
+        console.error('Error fetching previous versions:', err);
       } finally {
         this.loading = false;
+      }
+    },
+
+    async fetchVersionBySlug(slug: string): Promise<Version | null> {
+      try {
+        const response = await axios.get(
+          `http://localhost/api/versions.php?endpoint=version&slug=${slug}`
+        );
+        return response.data.data;
+      } catch (err: any) {
+        if (err.response?.status === 404) {
+          return null;
+        }
+        throw err;
       }
     },
 
     async loadMore() {
-      if (this.hasMore && !this.loadingMore) {
-        await this.fetchPreviousVersions(this.currentPage + 1);
+      if (this.loadingMore || !this.hasMore) return;
+      
+      this.loadingMore = true;
+      try {
+        this.currentPage++;
+        const response = await axios.get(
+          `http://localhost/api/versions.php?endpoint=previous&page=${this.currentPage}`
+        );
+        this.previousVersions = [...this.previousVersions, ...response.data.data];
+        this.hasMore = response.data.meta.hasMore;
+      } catch (err) {
+        this.currentPage--;
+        console.error('Error loading more versions:', err);
+      } finally {
+        this.loadingMore = false;
       }
-    },
-  },
+    }
+  }
 });

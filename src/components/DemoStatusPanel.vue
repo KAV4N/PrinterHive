@@ -44,7 +44,7 @@ import { defineComponent } from 'vue';
 import { usePrinterStore } from '@/stores/printer';
 
 export default defineComponent({
-  name: 'StatusPanel',
+  name: 'DemoStatusPanel',
   data() {
     return {
       printerStore: usePrinterStore()

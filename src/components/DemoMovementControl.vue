@@ -64,7 +64,7 @@ import { usePrinterStore } from '@/stores/printer';
 type Axis = 'x' | 'y' | 'z';
 
 export default defineComponent({
-  name: 'MovementControl',
+  name: 'DemoMovementControl',
   data() {
     return {
       axes: ['x', 'y', 'z'] as Axis[],

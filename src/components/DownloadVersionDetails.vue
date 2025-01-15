@@ -1,4 +1,3 @@
-<!-- src/views/DownloadVersionDetailsView.vue -->
 <template>
     <v-container >
       <v-row v-if="loading" justify="center">

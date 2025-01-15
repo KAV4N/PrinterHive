@@ -85,7 +85,7 @@ export const usePrinterStore = defineStore('printer', {
 			this.currentStep = 0;
 		},
 
-		simulatePrinting(steps: number) 
+		simulatePrint(steps: number) 
         {
 
             if (this.printing) 

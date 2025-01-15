@@ -104,7 +104,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import AmbientBackground from '@/components/Common/AmbientBackground.vue';
+import AmbientBackground from '@/components/AppAmbientBackground.vue';
 export default defineComponent({
   name: 'AboutView',
   components: {

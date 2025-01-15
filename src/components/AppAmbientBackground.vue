@@ -111,7 +111,7 @@ class AmbientBackground {
 }
 
 export default defineComponent( {
-  name: 'AmbientBackground',
+  name: 'AppAmbientBackground',
   
   props: {
     particleColor: {

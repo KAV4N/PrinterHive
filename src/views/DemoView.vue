@@ -3,52 +3,52 @@
   <v-container>
     <v-row>
           <v-col cols="12" md="4">
-            <StatusPanel />
+            <DemoStatusPanel />
           </v-col>
           <v-col cols="12" md="4">
-            <HeaterControl />
+            <DemoHeaterControl />
           </v-col>
           <v-col cols="12" md="4">
-            <TemperatureChart />
+            <DemoTemperatureChart />
           </v-col>
         </v-row>
         <v-divider></v-divider>
 
         <v-row>
           <v-col cols="12" md="4">
-            <job-control />
+            <DemoJobControl />
           </v-col>
           <v-col cols="12" md="8">
-            <layer-chart />
+            <DemoLayerChart />
           </v-col>
         </v-row>
         <v-divider></v-divider>
-        <MovementControl />
-        <ExtrusionControl />
+        <DemoMovementControl />
+        <DemoExtrusionControl />
   </v-container>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import StatusPanel from '@/components/Demo/StatusPanel.vue';
-import HeaterControl from '@/components/Demo/HeaterControl.vue';
-import TemperatureChart from '@/components/Demo/TemperatureChart.vue';
-import MovementControl from '@/components/Demo/MovementControl.vue';
-import ExtrusionControl from '@/components/Demo/ExtrusionControl.vue';
-import JobControl from '@/components/Demo/JobControl.vue';
-import LayerChart from '@/components/Demo/LayerChart.vue';
+import DemoStatusPanel from '@/components/DemoStatusPanel.vue';
+import DemoHeaterControl from '@/components/DemoHeaterControl.vue';
+import DemoTemperatureChart from '@/components/DemoTemperatureChart.vue';
+import DemoMovementControl from '@/components/DemoMovementControl.vue';
+import DemoExtrusionControl from '@/components/DemoExtrusionControl.vue';
+import DemoJobControl from '@/components/DemoJobControl.vue';
+import DemoLayerChart from '@/components/DemoLayerChart.vue';
 import { usePrinterStore } from '@/stores/printer';
 
 export default defineComponent({
-  name: 'PrinterControlView',
+  name: 'DemoView',
   components: {
-    StatusPanel,
-    HeaterControl,
-    TemperatureChart,
-    MovementControl,
-    ExtrusionControl,
-    JobControl,
-    LayerChart
+    DemoStatusPanel,
+    DemoHeaterControl,
+    DemoTemperatureChart,
+    DemoMovementControl,
+    DemoExtrusionControl,
+    DemoJobControl,
+    DemoLayerChart
   },
   data() {
     return {
@@ -61,7 +61,7 @@ export default defineComponent({
   mounted() {
     this.timer = setInterval(() => {
       this.printerStore.updateTemperatures();
-      this.printerStore.simulatePrinting(this.simulationCount);
+      this.printerStore.simulatePrint(this.simulationCount);
     }, 1000);
   },
   beforeUnmount() {

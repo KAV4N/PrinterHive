@@ -51,7 +51,7 @@
   import { usePrinterStore } from '@/stores/printer';
   
   export default defineComponent({
-    name: 'ExtrusionControl',
+    name: 'DemoExtrusionControl',
     data() {
     return {
       printerStore: usePrinterStore()

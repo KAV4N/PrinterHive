@@ -1,30 +1,26 @@
 <template>
-
   <v-app>
-    <Header />
-
+    <AppHeader />
     <v-main>
-
       <RouterView />
     </v-main>
-    <Footer />
+    <AppFooter />
   </v-app>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { RouterView } from 'vue-router';
-import Header from '@/components/Common/Header.vue';
-import Footer from '@/components/Common/Footer.vue';
-import AmbientBackground from '@/components/Common/AmbientBackground.vue';
+import AppHeader from '@/components/AppHeader.vue';
+import AppFooter from '@/components/AppFooter.vue';
+import AppAmbientBackground from '@/components/AppAmbientBackground.vue';
 
 export default defineComponent({
   name: 'App',
   components: {
-    Header,
-    Footer,
-    RouterView,
-    AmbientBackground
+    AppHeader,
+    AppFooter,
+    AppAmbientBackground
   }
 });
 </script>

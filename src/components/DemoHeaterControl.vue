@@ -61,7 +61,7 @@ import { defineComponent } from 'vue';
 import { usePrinterStore } from '@/stores/printer';
 
 export default defineComponent({
-  name: 'HeaterControl',
+  name: 'DemoHeaterControl',
   data() {
     return {
       printerStore: usePrinterStore()

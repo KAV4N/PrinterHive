@@ -60,7 +60,7 @@ import { useThemeStore } from '@/stores/themeStore'
 import { useTheme } from 'vuetify'
 
 export default {
-  name: 'Header',
+  name: 'AppHeader',
   data: () => ({
     drawer: false,
     navigationItems: [

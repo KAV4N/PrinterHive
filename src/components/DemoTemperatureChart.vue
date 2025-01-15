@@ -36,7 +36,7 @@ function formatTime(date: Date): string {
 }
 
 export default defineComponent({
-  name: 'TemperatureChart',
+  name: 'DemoTemperatureChart',
   components: {
     VChart,
   },

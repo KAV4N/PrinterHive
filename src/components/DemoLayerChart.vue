@@ -28,15 +28,8 @@
     LegendComponent,
   ]);
   
-  function formatTime(date: Date): string {
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    const seconds = date.getSeconds().toString().padStart(2, '0');
-    return `${hours}:${minutes}:${seconds}`;
-  }
-  
   export default defineComponent({
-    name: 'LayerChart',
+    name: 'DemoLayerChart',
     components: {
       VChart,
     },
@@ -45,6 +38,15 @@
         printerStore: usePrinterStore()
       };
     },
+    methods:{
+      formatTime(date: Date): string {
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const seconds = date.getSeconds().toString().padStart(2, '0');
+        return `${hours}:${minutes}:${seconds}`;
+      }
+    },
+
     computed: {
       chartOption() {
         const now = Date.now();
@@ -65,7 +67,7 @@
           tooltip: {
             trigger: 'axis',
             formatter: (params: any) => {
-              const time = formatTime(new Date(params[0].value[0]));
+              const time = this.formatTime(new Date(params[0].value[0]));
               return `Time: ${time}<br/>
                       Layer Height: ${params[0].value[1].toFixed(2)}mm<br/>
                       Temperature: ${this.printerStore.toolTemperature.toFixed(1)}°C`;

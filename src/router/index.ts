@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import PrinterControlView from '@/views/PrinterControlView.vue'
+import DemoView from '@/views/DemoView.vue'
 import AboutView from '@/views/AboutView.vue'
 import DownloadView from '@/views/DownloadView.vue'
 import FeaturesView from '@/views/FeaturesView.vue'
@@ -17,7 +17,7 @@ const router = createRouter({
     {
       path: '/demo',
       name: 'demo',
-      component: PrinterControlView,
+      component: DemoView,
     },
     {
       path: '/features',
@@ -29,7 +29,7 @@ const router = createRouter({
       name: 'about',
       component: AboutView,
     },
-{
+    {
       path: '/download',
       name: 'download',
       component: DownloadView,
@@ -37,7 +37,7 @@ const router = createRouter({
         {
           path: ':slug',
           name: 'version-details',
-          component: () => import('@/views/DownloadVersionDetailsView.vue')
+          component: () => import('@/components/DownloadVersionDetails.vue')
         }
       ]
     },

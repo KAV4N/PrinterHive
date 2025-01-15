@@ -34,7 +34,7 @@
   import { usePrinterStore } from '@/stores/printer';
 
   export default defineComponent({
-    name: 'JobControl',
+    name: 'DemoJobControl',
     data() {
     return {
       printerStore: usePrinterStore()
