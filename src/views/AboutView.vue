@@ -32,25 +32,12 @@
     <v-row class="my-12">
       <v-col cols="12">
         <h2 class="text-h4 mb-8 text-center font-weight-medium">Our Journey</h2>
-        <v-timeline >
-          <v-timeline-item
+        <v-timeline>
+          <AboutTimelineCard
             v-for="(item, i) in timelineItems"
             :key="i"
-            :dot-color="item.color"
-            size="small"
-          >
-            <template v-slot:opposite>
-              <div class="text-h6 font-weight-bold">{{ item.year }}</div>
-            </template>
-            <v-card elevation="2">
-              <v-card-title class="text-h6">
-                {{ item.title }}
-              </v-card-title>
-              <v-card-text>
-                {{ item.description }}
-              </v-card-text>
-            </v-card>
-          </v-timeline-item>
+            :item="item"
+          />
         </v-timeline>
       </v-col>
     </v-row>
@@ -92,7 +79,6 @@
             color="primary"
             x-large
             rounded
-            @click="contact"
           >
             Contact Us
           </v-btn>
@@ -105,11 +91,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import AmbientBackground from '@/components/AppAmbientBackground.vue';
+import AboutTimelineCard from '@/components/AboutTimelineCard.vue';
 export default defineComponent({
   name: 'AboutView',
   components: {
-    AmbientBackground
-
+    AmbientBackground,
+    AboutTimelineCard
   },
   data() {
     return {
@@ -161,11 +148,5 @@ export default defineComponent({
       ]
     };
   },
-
-  methods: {
-    contact() {
-      console.log('Contact button clicked');
-    }
-  }
 });
 </script>

@@ -37,7 +37,7 @@ import DemoMovementControl from '@/components/DemoMovementControl.vue';
 import DemoExtrusionControl from '@/components/DemoExtrusionControl.vue';
 import DemoJobControl from '@/components/DemoJobControl.vue';
 import DemoLayerChart from '@/components/DemoLayerChart.vue';
-import { usePrinterStore } from '@/stores/printer';
+import { usePrinterStore } from '@/stores/printerStore';
 
 export default defineComponent({
   name: 'DemoView',

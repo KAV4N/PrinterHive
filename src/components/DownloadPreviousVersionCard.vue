@@ -3,7 +3,7 @@
       <v-card-item>
         <v-card-title>Version {{ version.version }}</v-card-title>
         <v-card-subtitle>
-          Released on {{ formatDate(version.releaseDate) }}
+          Released on {{ version.releaseDate }}
         </v-card-subtitle>
       </v-card-item>
   
@@ -41,16 +41,6 @@
         type: Object as PropType<Version>,
         required: true,
       },
-    },
-  
-    methods: {
-        formatDate(date: string): string {
-            return new Intl.DateTimeFormat('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-            }).format(new Date(date));
-        },
     },
   });
   </script>

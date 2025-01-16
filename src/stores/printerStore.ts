@@ -124,19 +124,19 @@ export const usePrinterStore = defineStore('printer', {
 
 		updateTemperatures() {
 			const now = Date.now();
-
+		
 			this.toolTemperature = this.calculateNewTemperature(
 				this.toolTemperature,
 				this.toolTarget,
 				25.65
 			);
-
+		
 			this.bedTemperature = this.calculateNewTemperature(
 				this.bedTemperature,
 				this.bedTarget,
 				6.75
 			);
-
+		
 			this.toolHistory.push({
 				timestamp: now,
 				value: this.toolTemperature
@@ -145,15 +145,16 @@ export const usePrinterStore = defineStore('printer', {
 				timestamp: now,
 				value: this.bedTemperature
 			});
-
+		
 			const fiveMinutesAgo = now - 5 * 60 * 1000;
 			this.toolHistory = this.toolHistory.filter(
-				point => point.timestamp > fiveMinutesAgo
+				(point: TemperaturePoint) => point.timestamp > fiveMinutesAgo
 			);
 			this.bedHistory = this.bedHistory.filter(
-				point => point.timestamp > fiveMinutesAgo
+				(point: TemperaturePoint) => point.timestamp > fiveMinutesAgo
 			);
 		},
+		
 
 		calculateNewTemperature(current: number, target: number, rate: number): number {
 			if (target > current) {

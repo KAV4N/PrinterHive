@@ -42,7 +42,7 @@
                   </v-chip>
                 </v-card-title>
                 <v-card-subtitle class="mt-2">
-                  Released on {{ formatDate(version.releaseDate) }}
+                  Released on {{ version.releaseDate }}
                 </v-card-subtitle>
               </v-card-item>
   
@@ -107,82 +107,65 @@
   </template>
   
   <script lang="ts">
-  import { defineComponent } from 'vue';
-  import { useVersionStore } from '@/stores/version';
-  import type { Version } from '@/types/version';
-  
-  export default defineComponent({
-    name: 'DownloadVersionDetailsView',
-  
-    data() {
-      return {
-        versionStore: useVersionStore(),
-        version: null as Version | null,
-        loading: false,
-        error: null as string | null,
-      };
+ import { defineComponent } from 'vue';
+import { useVersionStore } from '@/stores/versionStore';
+import type { Version } from '@/types/version';
+
+export default defineComponent({
+  name: 'DownloadVersionDetailsView',
+
+  data() {
+    return {
+      versionStore: useVersionStore()
+    }
+  },
+
+  computed: {
+    version(): Version | null {
+      return this.versionStore.currentVersion.data;
     },
-  
-    computed: {
-      isLatestVersion(): boolean {
-        return (
-          this.version?.version === this.versionStore.latestVersion?.version
-        );
-      },
+    loading(): boolean {
+      return this.versionStore.currentVersion.request.loading;
     },
-  
-    methods: {
-      formatDate(date: string): string {
-        return new Intl.DateTimeFormat('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        }).format(new Date(date));
-      },
-  
-      getPlatformIcon(platform: string): string {
-        switch (platform) {
-          case 'Windows':
-            return 'mdi-microsoft';
-          case 'macOS':
-            return 'mdi-apple';
-          case 'Linux':
-            return 'mdi-linux';
-          default:
-            return '';
-        }
-      },
-  
-      downloadVersion(url: string): void {
-        window.location.href = url;
-      },
-  
-      async loadVersionDetails() {
-        const slug = this.$route.params.slug as string;
-        this.loading = true;
-        try {
-          this.version = await this.versionStore.fetchVersionBySlug(slug);
-          if (!this.version) {
-            this.error = 'Version not found';
-          }
-        } catch (error) {
-          this.error = 'Failed to load version details';
-          console.error(error);
-        } finally {
-          this.loading = false;
-        }
-      },
+    error(): string | null {
+      return this.versionStore.currentVersion.request.error;
     },
-  
-    async created() {
-      await this.loadVersionDetails();
+    isLatestVersion(): boolean {
+      return this.versionStore.currentVersion.data?.latest ? true : false;
+    }
+  },
+
+  methods: {
+
+    getPlatformIcon(platform: string): string {
+      switch (platform) {
+        case 'Windows':
+          return 'mdi-microsoft';
+        case 'macOS':
+          return 'mdi-apple';
+        case 'Linux':
+          return 'mdi-linux';
+        default:
+          return '';
+      }
     },
-  
-    watch: {
-      '$route.params.slug': {
-        handler: 'loadVersionDetails',
-        immediate: true,
-      },
+
+    downloadVersion(url: string): void {
+      window.location.href = url;
     },
-  });
-  </script>
+
+    loadVersionDetails() {
+      const slug = this.$route.params.slug as string;
+      this.versionStore.fetchVersionBySlug(slug);
+    },
+  },
+
+  created() {
+    this.loadVersionDetails();
+  },
+
+  beforeUnmount() {
+    this.versionStore.clearCurrentVersion();
+  }
+});
+</script>

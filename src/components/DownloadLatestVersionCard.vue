@@ -8,7 +8,7 @@
               <v-chip color="success" class="ml-2" size="small">Latest</v-chip>
             </v-card-title>
             <v-card-subtitle class="mt-2">
-              Released on {{ formatDate(version.releaseDate) }}
+              Released on {{ version.releaseDate }}
             </v-card-subtitle>
           </v-card-item>
   
@@ -48,16 +48,6 @@
         type: Object as PropType<Version>,
         required: true,
       },
-    },
-  
-    methods: {
-        formatDate(date: string): string {
-            return new Intl.DateTimeFormat('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-            }).format(new Date(date));
-        },
     },
   });
   </script>

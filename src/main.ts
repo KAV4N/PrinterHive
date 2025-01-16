@@ -7,13 +7,15 @@ import App from './App.vue'
 import router from './router'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
-import axios from 'axios';
+import axios from 'axios'
 
+const app = createApp(App)
 
-
+// Create Pinia and Vuetify instances
+const pinia = createPinia()
 const vuetify = createVuetify({
   theme: {
-    defaultTheme: localStorage.getItem('theme') === 'dark' ? 'PrinterHiveTheme' : 'LightPrinterHiveTheme',
+    defaultTheme: 'LightPrinterHiveTheme', // set default theme
     themes: {
       PrinterHiveTheme,
       LightPrinterHiveTheme
@@ -23,8 +25,12 @@ const vuetify = createVuetify({
   directives
 })
 
-const app = createApp(App)
-app.use(createPinia())
+axios.defaults.baseURL = 'http://localhost'
+
+// Mount the app
+app.use(pinia)
 app.use(router)
 app.use(vuetify)
+
+// Watch for changes in the Pinia store's theme and update the Vuetify theme
 app.mount('#app')

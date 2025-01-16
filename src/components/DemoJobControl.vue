@@ -31,7 +31,7 @@
   
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { usePrinterStore } from '@/stores/printer';
+  import { usePrinterStore } from '@/stores/printerStore';
 
   export default defineComponent({
     name: 'DemoJobControl',

@@ -16,13 +16,20 @@
         </v-col>
       </v-row>
 
-      <v-row v-if="error" justify="center">
+      <!-- Latest Version Section -->
+      <v-row v-if="latestVersionError" justify="center">
         <v-col cols="12" class="text-center">
-          <v-alert type="error">{{ error }}</v-alert>
+          <v-alert type="error">{{ latestVersionError }}</v-alert>
+        </v-col>
+      </v-row>
+      
+      <v-row v-if="previousVersionsError" justify="center">
+        <v-col cols="12" class="text-center">
+          <v-alert type="error">{{ previousVersionsError }}</v-alert>
         </v-col>
       </v-row>
 
-      <v-row v-if="loading && !latestVersion" justify="center">
+      <v-row v-if="latestVersionLoading && previousVersionsLoading" justify="center">
         <v-col cols="12" class="text-center">
           <v-progress-circular indeterminate color="primary"></v-progress-circular>
         </v-col>
@@ -32,7 +39,14 @@
         <download-latest-version-card :version="latestVersion" />
       </template>
 
+      <!-- Previous Versions Section -->
       <template v-if="previousVersions.length">
+        <v-row v-if="previousVersionsError" justify="center">
+          <v-col cols="12" class="text-center">
+            <v-alert type="error">{{ previousVersionsError }}</v-alert>
+          </v-col>
+        </v-row>
+
         <v-row class="mb-4">
           <v-col cols="12">
             <h2 class="text-h5">Previous Versions</h2>
@@ -53,7 +67,7 @@
         <v-row v-if="hasMore" justify="center" class="mt-4">
           <v-col cols="12" md="6" class="text-center">
             <v-btn
-              :loading="loadingMore"
+              :loading="previousVersionsLoading"
               @click="loadMore"
               color="secondary"
               variant="outlined"
@@ -63,7 +77,7 @@
           </v-col>
         </v-row>
 
-        <v-row v-if="loadingMore" justify="center" class="mt-4">
+        <v-row v-if="previousVersionsLoading" justify="center" class="mt-4">
           <v-col cols="12" class="text-center">
             <v-progress-circular
               indeterminate
@@ -79,7 +93,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { useVersionStore } from '@/stores/version';
+import { useVersionStore } from '@/stores/versionStore';
 import AppAmbientBackground from '@/components/AppAmbientBackground.vue';
 import DownloadLatestVersionCard from '@/components/DownloadLatestVersionCard.vue';
 import DownloadPreviousVersionCard from '@/components/DownloadPreviousVersionCard.vue';
@@ -101,56 +115,56 @@ export default defineComponent({
   },
 
   computed: {
-    loading(): boolean {
-      return this.versionStore.loading;
+    latestVersionLoading(): boolean {
+      return this.versionStore.latestVersion.request.loading;
     },
 
-    loadingMore(): boolean {
-      return this.versionStore.loadingMore;
+    latestVersionError(): string | null {
+      return this.versionStore.latestVersion.request.error;
     },
 
-    error(): string | null {
-      return this.versionStore.error;
+    previousVersionsLoading(): boolean {
+      return this.versionStore.previousVersions.request.loading;
+    },
+
+    previousVersionsError(): string | null {
+      return this.versionStore.previousVersions.request.error;
     },
 
     hasMore(): boolean {
-      return this.versionStore.hasMore;
+      return this.versionStore.previousVersions.hasMore;
     },
 
     latestVersion(): Version | null {
-      return this.versionStore.latestVersion;
+      return this.versionStore.latestVersion.data;
     },
 
     previousVersions(): Version[] {
-      return this.versionStore.previousVersions;
+      return this.versionStore.previousVersions.data;
     },
+    currentRouteName() {
+        return this.$route.name;
+    }
   },
 
   methods: {
-    async loadMore() {
-      await this.versionStore.loadMore();
+    loadMore() {
+      this.versionStore.loadMore();
     },
   },
 
-  async created() {
+  mounted() {
     if (this.$route.name !== 'version-details') {
-      await Promise.all([
-        this.versionStore.fetchLatestVersion(),
-        this.versionStore.fetchPreviousVersions()
-      ]);
+      this.versionStore.initializeVersions();
     }
   },
 
   watch: {
-    '$route.name'(newRouteName) {
+    currentRouteName(newRouteName) {
       if (newRouteName !== 'version-details' && !this.latestVersion) {
-        Promise.all([
-          this.versionStore.fetchLatestVersion(),
-          this.versionStore.fetchPreviousVersions()
-        ]);
+        this.versionStore.initializeVersions();
       }
     }
   }
 });
 </script>
-

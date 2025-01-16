@@ -1,4 +1,5 @@
 export interface Version {
+  latest: boolean;
   version: string;
   releaseDate: string;
   description: string;
@@ -11,9 +12,24 @@ export interface Download {
   url: string;
 }
 
-export interface PaginationMeta {
-  currentPage: number;
-  totalPages: number;
-  totalVersions: number;
-  hasMore: boolean;
+export interface RequestState {
+  loading: boolean;
+  error: string | null;
+}
+
+export interface VersionState {
+  latestVersion: {
+    data: Version | null;
+    request: RequestState;
+  };
+  previousVersions: {
+    data: Version[];
+    request: RequestState;
+    currentPage: number;
+    hasMore: boolean;
+  };
+  currentVersion: {
+    data: Version | null;
+    request: RequestState;
+  };
 }

@@ -18,7 +18,8 @@ import {
   LegendComponent,
 } from 'echarts/components';
 import VChart from 'vue-echarts';
-import { usePrinterStore } from '@/stores/printer';
+import { usePrinterStore } from '@/stores/printerStore';
+import { type TemperaturePoint } from '@/types/printer';
 
 use([
   CanvasRenderer,
@@ -89,7 +90,7 @@ export default defineComponent({
           {
             name: 'Tool Temperature',
             type: 'line',
-            data: this.printerStore.toolHistory.map(point => [point.timestamp, point.value]),
+            data: this.printerStore.toolHistory.map((point: TemperaturePoint) => [point.timestamp, point.value]),
             smooth: true,
             showSymbol: false,
             itemStyle: {
@@ -99,7 +100,7 @@ export default defineComponent({
           {
             name: 'Bed Temperature',
             type: 'line',
-            data: this.printerStore.bedHistory.map(point => [point.timestamp, point.value]),
+            data: this.printerStore.bedHistory.map((point: TemperaturePoint) => [point.timestamp, point.value]),
             smooth: true,
             showSymbol: false,
             itemStyle: {

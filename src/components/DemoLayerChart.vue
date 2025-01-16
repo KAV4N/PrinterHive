@@ -18,7 +18,7 @@
     LegendComponent,
   } from 'echarts/components';
   import VChart from 'vue-echarts';
-  import { usePrinterStore } from '@/stores/printer';
+  import { usePrinterStore } from '@/stores/printerStore';
   
   use([
     CanvasRenderer,
