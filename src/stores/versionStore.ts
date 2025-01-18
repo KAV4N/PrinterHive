@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import axios from 'axios';
+import axios from '@/plugins/axios';
 import type { Version, VersionState } from '@/types/version';
 
 const initialRequestState = {

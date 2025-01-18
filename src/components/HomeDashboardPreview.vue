@@ -17,9 +17,6 @@
             ></v-list-item>
           </v-list>
         </v-col>
-        <v-col cols="12" md="6">
-          <v-img src="@/assets/dashboard-preview.png" cover height="100%"></v-img>
-        </v-col>
       </v-row>
     </v-card>
   </template>
