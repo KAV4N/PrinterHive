@@ -125,10 +125,10 @@ export default defineComponent({
       return this.versionStore.currentVersion.data;
     },
     loading(): boolean {
-      return this.versionStore.currentVersion.request.loading;
+      return this.versionStore.isLoading;
     },
     error(): string | null {
-      return this.versionStore.currentVersion.request.error;
+      return this.versionStore.currentVersion.error;
     },
     isLatestVersion(): boolean {
       return this.versionStore.currentVersion.data?.latest ? true : false;

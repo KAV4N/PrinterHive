@@ -8,32 +8,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { use } from 'echarts/core';
-import { CanvasRenderer } from 'echarts/renderers';
-import { LineChart } from 'echarts/charts';
-import {
-  GridComponent,
-  TooltipComponent,
-  LegendComponent,
-} from 'echarts/components';
-import VChart from 'vue-echarts';
-import { usePrinterStore } from '@/stores/printerStore';
-import { type TemperaturePoint } from '@/types/printer';
+import { defineComponent } from 'vue'
+import { use } from 'echarts/core'
+import { CanvasRenderer } from 'echarts/renderers'
+import { LineChart } from 'echarts/charts'
+import { GridComponent, TooltipComponent, LegendComponent } from 'echarts/components'
+import VChart from 'vue-echarts'
+import { usePrinterStore } from '@/stores/printerStore'
+import { type TemperaturePoint } from '@/types/printer'
 
-use([
-  CanvasRenderer,
-  LineChart,
-  GridComponent,
-  TooltipComponent,
-  LegendComponent,
-]);
+use([CanvasRenderer, LineChart, GridComponent, TooltipComponent, LegendComponent])
 
 function formatTime(date: Date): string {
-  const hours = date.getHours().toString().padStart(2, '0');
-  const minutes = date.getMinutes().toString().padStart(2, '0');
-  const seconds = date.getSeconds().toString().padStart(2, '0');
-  return `${hours}:${minutes}:${seconds}`;
+  const hours = date.getHours().toString().padStart(2, '0')
+  const minutes = date.getMinutes().toString().padStart(2, '0')
+  const seconds = date.getSeconds().toString().padStart(2, '0')
+  return `${hours}:${minutes}:${seconds}`
 }
 
 export default defineComponent({
@@ -43,42 +33,42 @@ export default defineComponent({
   },
   data() {
     return {
-      printerStore: usePrinterStore()
-    };
+      printerStore: usePrinterStore(),
+    }
   },
   computed: {
     chartOption() {
-      const now = Date.now();
-      const fiveMinutesAgo = now - 5 * 60 * 1000;
-      
+      const now = Date.now()
+      const fiveMinutesAgo = now - 5 * 60 * 1000
+
       return {
         animation: false,
         tooltip: {
           trigger: 'axis',
           formatter: (params: any) => {
-            const time = formatTime(new Date(params[0].value[0]));
+            const time = formatTime(new Date(params[0].value[0]))
             return `Time: ${time}<br/>
                     Tool: ${params[0].value[1].toFixed(1)}°C<br/>
-                    Bed: ${params[1].value[1].toFixed(1)}°C`;
-          }
+                    Bed: ${params[1].value[1].toFixed(1)}°C`
+          },
         },
         legend: {
-          data: ['Tool Temperature', 'Bed Temperature']
+          data: ['Tool Temperature', 'Bed Temperature'],
         },
         xAxis: {
           type: 'time',
           axisLabel: {
             formatter: (value: number) => {
-              const date = new Date(value);
-              return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+              const date = new Date(value)
+              return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
             },
             interval: 60 * 1000, // every minute
           },
           min: fiveMinutesAgo,
           max: now,
           splitLine: {
-            show: true
-          }
+            show: true,
+          },
         },
         yAxis: {
           type: 'value',
@@ -90,29 +80,34 @@ export default defineComponent({
           {
             name: 'Tool Temperature',
             type: 'line',
-            data: this.printerStore.toolHistory.map((point: TemperaturePoint) => [point.timestamp, point.value]),
+            data: this.printerStore.toolHistory.map((point: TemperaturePoint) => [
+              point.timestamp,
+              point.value,
+            ]),
             smooth: true,
             showSymbol: false,
             itemStyle: {
-              color: 'red', 
+              color: 'red',
             },
           },
           {
             name: 'Bed Temperature',
             type: 'line',
-            data: this.printerStore.bedHistory.map((point: TemperaturePoint) => [point.timestamp, point.value]),
+            data: this.printerStore.bedHistory.map((point: TemperaturePoint) => [
+              point.timestamp,
+              point.value,
+            ]),
             smooth: true,
             showSymbol: false,
             itemStyle: {
-              color: 'gold', 
+              color: 'gold',
             },
-          }
-        ]
-      };
+          },
+        ],
+      }
     },
   },
-  
-});
+})
 </script>
 
 <style scoped>

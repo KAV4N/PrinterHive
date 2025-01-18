@@ -9,23 +9,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import AppHeader from '@/components/AppHeader.vue';
-import AppFooter from '@/components/AppFooter.vue';
-import AppAmbientBackground from '@/components/AppAmbientBackground.vue';
+import { defineComponent } from 'vue'
+import AppHeader from '@/components/AppHeader.vue'
+import AppFooter from '@/components/AppFooter.vue'
+import AppAmbientBackground from '@/components/AppAmbientBackground.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
     AppHeader,
     AppFooter,
-    AppAmbientBackground
-  }
-});
+    AppAmbientBackground,
+  },
+})
 </script>
 
 <style>
-html, 
+html,
 body {
   margin: 0;
   overflow-x: hidden;

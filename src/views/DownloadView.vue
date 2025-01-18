@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <AppAmbientBackground />
-    
+
     <router-view v-if="$route.name === 'version-details'"></router-view>
 
     <template v-else>
@@ -22,14 +22,14 @@
           <v-alert type="error">{{ latestVersionError }}</v-alert>
         </v-col>
       </v-row>
-      
+
       <v-row v-if="previousVersionsError" justify="center">
         <v-col cols="12" class="text-center">
           <v-alert type="error">{{ previousVersionsError }}</v-alert>
         </v-col>
       </v-row>
 
-      <v-row v-if="latestVersionLoading && previousVersionsLoading" justify="center">
+      <v-row v-if="isLoading" justify="center">
         <v-col cols="12" class="text-center">
           <v-progress-circular indeterminate color="primary"></v-progress-circular>
         </v-col>
@@ -54,36 +54,22 @@
         </v-row>
 
         <v-row>
-          <v-col
-            cols="12"
-            md="6"
-            v-for="version in previousVersions"
-            :key="version.version"
-          >
+          <v-col cols="12" md="6" v-for="version in previousVersions" :key="version.version">
             <download-previous-version-card :version="version" />
           </v-col>
         </v-row>
 
         <v-row v-if="hasMore" justify="center" class="mt-4">
           <v-col cols="12" md="6" class="text-center">
-            <v-btn
-              :loading="previousVersionsLoading"
-              @click="loadMore"
-              color="secondary"
-              variant="outlined"
-            >
+            <v-btn :loading="isLoading" @click="loadMore" color="secondary" variant="outlined">
               Load More Versions
             </v-btn>
           </v-col>
         </v-row>
 
-        <v-row v-if="previousVersionsLoading" justify="center" class="mt-4">
+        <v-row v-if="isLoading" justify="center" class="mt-4">
           <v-col cols="12" class="text-center">
-            <v-progress-circular
-              indeterminate
-              color="secondary"
-              size="24"
-            ></v-progress-circular>
+            <v-progress-circular indeterminate color="secondary" size="24"></v-progress-circular>
           </v-col>
         </v-row>
       </template>
@@ -92,16 +78,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { useVersionStore } from '@/stores/versionStore';
-import AppAmbientBackground from '@/components/AppAmbientBackground.vue';
-import DownloadLatestVersionCard from '@/components/DownloadLatestVersionCard.vue';
-import DownloadPreviousVersionCard from '@/components/DownloadPreviousVersionCard.vue';
-import type { Version } from '@/types/version';
+import { defineComponent } from 'vue'
+import { useVersionStore } from '@/stores/versionStore'
+import AppAmbientBackground from '@/components/AppAmbientBackground.vue'
+import DownloadLatestVersionCard from '@/components/DownloadLatestVersionCard.vue'
+import DownloadPreviousVersionCard from '@/components/DownloadPreviousVersionCard.vue'
+import type { Version } from '@/types/version'
 
 export default defineComponent({
   name: 'DownloadView',
-  
+
   components: {
     AppAmbientBackground,
     DownloadLatestVersionCard,
@@ -111,60 +97,56 @@ export default defineComponent({
   data() {
     return {
       versionStore: useVersionStore(),
-    };
+    }
   },
 
   computed: {
-    latestVersionLoading(): boolean {
-      return this.versionStore.latestVersion.request.loading;
+    isLoading(): boolean {
+      return this.versionStore.isLoading
     },
 
     latestVersionError(): string | null {
-      return this.versionStore.latestVersion.request.error;
-    },
-
-    previousVersionsLoading(): boolean {
-      return this.versionStore.previousVersions.request.loading;
+      return this.versionStore.latestVersion.error
     },
 
     previousVersionsError(): string | null {
-      return this.versionStore.previousVersions.request.error;
+      return this.versionStore.previousVersions.error
     },
 
     hasMore(): boolean {
-      return this.versionStore.previousVersions.hasMore;
+      return this.versionStore.previousVersions.hasMore
     },
 
     latestVersion(): Version | null {
-      return this.versionStore.latestVersion.data;
+      return this.versionStore.latestVersion.data
     },
 
     previousVersions(): Version[] {
-      return this.versionStore.previousVersions.data;
+      return this.versionStore.previousVersions.data
     },
     currentRouteName() {
-        return this.$route.name;
-    }
+      return this.$route.name
+    },
   },
 
   methods: {
     loadMore() {
-      this.versionStore.loadMore();
+      this.versionStore.loadMore()
     },
   },
 
   mounted() {
     if (this.$route.name !== 'version-details') {
-      this.versionStore.initializeVersions();
+      this.versionStore.initializeVersions()
     }
   },
 
   watch: {
     currentRouteName(newRouteName) {
-      if (newRouteName !== 'version-details' && !this.latestVersion) {
-        this.versionStore.initializeVersions();
+      if (newRouteName !== 'version-details') {
+        this.versionStore.initializeVersions()
       }
-    }
-  }
-});
+    },
+  },
+})
 </script>

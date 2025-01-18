@@ -2,10 +2,10 @@
   <v-app-bar color="primary" prominent elevation="1">
     <v-container>
       <v-row align="center">
-        <v-col :cols="$vuetify.display.smAndDown ? 9 : 3" class="d-flex justify-start">
-          <v-toolbar-title 
-            style="cursor: pointer" 
-            @click="$router.push('/')" 
+        <v-col :cols="$vuetify.display.smAndDown" class="d-flex justify-start">
+          <v-toolbar-title
+            style="cursor: pointer"
+            @click="$router.push('/')"
             class="font-weight-bold text-h5"
           >
             PrinterHive
@@ -14,18 +14,15 @@
 
         <v-col v-if="$vuetify.display.mdAndUp" cols="6" class="d-flex justify-center">
           <v-row dense no-gutters justify="center">
-            <v-btn
-              v-for="item in navigationItems"
-              :key="item.title"
-              :to="item.path"
-            >
+            <v-btn v-for="item in navigationItems" :key="item.title" :to="item.path">
               {{ item.title }}
             </v-btn>
           </v-row>
         </v-col>
 
-        <v-col :cols="$vuetify.display.smAndDown ? 3 : 3" class="d-flex justify-end align-center">
-          <v-switch v-if="$vuetify.display.mdAndUp"
+        <v-col :cols="$vuetify.display.smAndDown" class="d-flex justify-end align-center">
+          <v-switch
+            v-if="$vuetify.display.mdAndUp"
             :model-value="themeStore?.isLight"
             @update:model-value="toggleTheme"
             hide-details
@@ -36,9 +33,9 @@
             </template>
           </v-switch>
 
-          <v-app-bar-nav-icon 
-            variant="text" 
-            @click.stop="drawer = !drawer" 
+          <v-app-bar-nav-icon
+            variant="text"
+            @click.stop="drawer = !drawer"
             v-if="$vuetify.display.smAndDown"
           ></v-app-bar-nav-icon>
         </v-col>
@@ -46,18 +43,17 @@
     </v-container>
   </v-app-bar>
 
-
   <v-navigation-drawer v-model="drawer" location="right" temporary>
     <v-list>
-      <v-list-item 
-        v-for="item in navigationItems" 
-        :key="item.title" 
-        :to="item.path" 
+      <v-list-item
+        v-for="item in navigationItems"
+        :key="item.title"
+        :to="item.path"
         @click="drawer = false"
       >
         <v-list-item-title>{{ item.title }}</v-list-item-title>
       </v-list-item>
-      
+
       <v-list-item>
         <v-switch
           :model-value="themeStore?.isLight"
@@ -84,9 +80,9 @@ export default {
       { title: 'Features', path: '/features' },
       { title: 'Demo', path: '/demo' },
       { title: 'Download', path: '/download' },
-      { title: 'About', path: '/about' }
+      { title: 'About', path: '/about' },
     ],
-    themeStore: useThemeStore()
+    themeStore: useThemeStore(),
   }),
   created() {
     this.updateVuetifyTheme()
@@ -99,7 +95,7 @@ export default {
     toggleTheme() {
       this.themeStore.toggleTheme()
       this.updateVuetifyTheme()
-    }
-  }
+    },
+  },
 }
 </script>

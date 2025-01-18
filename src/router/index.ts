@@ -37,12 +37,12 @@ const router = createRouter({
         {
           path: ':slug',
           name: 'version-details',
-          component: () => import('@/components/DownloadVersionDetails.vue')
-        }
-      ]
+          component: () => import('@/components/DownloadVersionDetails.vue'),
+        },
+      ],
     },
     {
-      path: '/:catchAll(.*)', 
+      path: '/:catchAll(.*)',
       name: 'NotFound',
       component: NotFound,
     },

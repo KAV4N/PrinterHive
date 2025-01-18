@@ -5,13 +5,13 @@ import * as directives from 'vuetify/directives'
 import { PrinterHiveTheme, LightPrinterHiveTheme } from '@/theme/printerHiveTheme'
 
 export default createVuetify({
-    theme: {
-      defaultTheme: 'LightPrinterHiveTheme', 
-      themes: {
-        PrinterHiveTheme,
-        LightPrinterHiveTheme
-      }
+  theme: {
+    defaultTheme: 'LightPrinterHiveTheme',
+    themes: {
+      PrinterHiveTheme,
+      LightPrinterHiveTheme,
     },
-    components,
-    directives
-  });
+  },
+  components,
+  directives,
+})

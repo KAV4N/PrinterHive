@@ -89,15 +89,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import AmbientBackground from '@/components/AppAmbientBackground.vue';
-import HomeHeroSection from '@/components/HomeHeroSection.vue';
-import HomeKeyFeatureCard from '@/components/HomeKeyFeatureCard.vue';
-import HomeDashboardPreview from '@/components/HomeDashboardPreview.vue';
-import HomeMonitoringSection from '@/components/HomeMonitoringSection.vue';
-import HomeTestimonialCard from '@/components/HomeTestimonialCard.vue';
-import HomePricingCard from '@/components/HomePricingCard.vue';
-import type {Testimonial, KeyFeature, DashboardFeature} from '@/types/home'
+import { defineComponent } from 'vue'
+import AmbientBackground from '@/components/AppAmbientBackground.vue'
+import HomeHeroSection from '@/components/HomeHeroSection.vue'
+import HomeKeyFeatureCard from '@/components/HomeKeyFeatureCard.vue'
+import HomeDashboardPreview from '@/components/HomeDashboardPreview.vue'
+import HomeMonitoringSection from '@/components/HomeMonitoringSection.vue'
+import HomeTestimonialCard from '@/components/HomeTestimonialCard.vue'
+import HomePricingCard from '@/components/HomePricingCard.vue'
+import type { Testimonial, KeyFeature, DashboardFeature } from '@/types/home'
 
 export default defineComponent({
   name: 'HomeView',
@@ -108,57 +108,60 @@ export default defineComponent({
     HomeDashboardPreview,
     HomeMonitoringSection,
     HomeTestimonialCard,
-    HomePricingCard
+    HomePricingCard,
   },
   data() {
     return {
       showDemo: false,
       printProgress: 78,
       temperatureData: [
-        180, 185, 190, 195, 200, 205, 205, 205, 204, 205,
-        205, 205, 206, 205, 205, 204, 205, 205, 205, 205
+        180, 185, 190, 195, 200, 205, 205, 205, 204, 205, 205, 205, 206, 205, 205, 204, 205, 205,
+        205, 205,
       ],
       keyFeatures: [
         {
           title: 'Remote Management',
-          description: 'Control and monitor your 3D printers from anywhere in the world with secure remote access.',
+          description:
+            'Control and monitor your 3D printers from anywhere in the world with secure remote access.',
           icon: 'mdi-remote',
-          color: 'primary'
+          color: 'primary',
         },
         {
           title: 'Smart Analytics',
-          description: 'Make data-driven decisions with comprehensive analytics and reporting tools.',
+          description:
+            'Make data-driven decisions with comprehensive analytics and reporting tools.',
           icon: 'mdi-chart-box',
-          color: 'secondary'
+          color: 'secondary',
         },
         {
           title: 'AI Monitoring',
-          description: 'Detect print failures early with our advanced AI-powered monitoring system.',
+          description:
+            'Detect print failures early with our advanced AI-powered monitoring system.',
           icon: 'mdi-brain',
-          color: 'info'
-        }
+          color: 'info',
+        },
       ] as KeyFeature[],
       dashboardFeatures: [
         {
           icon: 'mdi-view-dashboard',
           title: 'Intuitive Interface',
-          subtitle: 'Easy-to-use dashboard for all your printers'
+          subtitle: 'Easy-to-use dashboard for all your printers',
         },
         {
           icon: 'mdi-printer-3d-nozzle',
           title: 'Temperature Control',
-          subtitle: 'Precise control over nozzle and bed temperatures'
+          subtitle: 'Precise control over nozzle and bed temperatures',
         },
         {
           icon: 'mdi-camera',
           title: 'Live Monitoring',
-          subtitle: 'Real-time video feeds with AI failure detection'
+          subtitle: 'Real-time video feeds with AI failure detection',
         },
         {
           icon: 'mdi-file-document',
           title: 'Job Management',
-          subtitle: 'Organize and queue print jobs efficiently'
-        }
+          subtitle: 'Organize and queue print jobs efficiently',
+        },
       ] as DashboardFeature[],
       monitoringFeatures: [
         'Real-time temperature graphs',
@@ -166,29 +169,33 @@ export default defineComponent({
         'Print progress tracking',
         'Automatic failure detection',
         'Mobile notifications',
-        'Historical data logging'
+        'Historical data logging',
       ],
       testimonials: [
         {
           name: 'John Smith',
           role: 'Manufacturing Manager',
-          content: 'PrinterHive has revolutionized how we manage our 3D printer farm. The remote monitoring capabilities have saved us countless hours of manual checking.'
+          content:
+            'PrinterHive has revolutionized how we manage our 3D printer farm. The remote monitoring capabilities have saved us countless hours of manual checking.',
         },
         {
           name: 'Sarah Johnson',
           role: 'Product Designer',
-          content: 'The ability to monitor prints remotely and get instant notifications about any issues has been a game-changer for our prototyping workflow.'
+          content:
+            'The ability to monitor prints remotely and get instant notifications about any issues has been a game-changer for our prototyping workflow.',
         },
         {
           name: 'Michael Chen',
           role: 'Education Director',
-          content: 'Managing our university\'s 3D printing lab has never been easier. PrinterHive\'s interface is intuitive and the analytics help us optimize usage.'
+          content:
+            "Managing our university's 3D printing lab has never been easier. PrinterHive's interface is intuitive and the analytics help us optimize usage.",
         },
         {
           name: 'Emma Davis',
           role: 'Maker Space Owner',
-          content: 'The fact that PrinterHive is free while offering enterprise-level features is amazing. It\'s perfect for our community maker space.'
-        }
+          content:
+            "The fact that PrinterHive is free while offering enterprise-level features is amazing. It's perfect for our community maker space.",
+        },
       ] as Testimonial[],
       pricingFeatures: [
         'Unlimited Printers',
@@ -198,18 +205,15 @@ export default defineComponent({
         'Analytics Dashboard',
         'Email Support',
         'Community Access',
-        'Regular Updates'
-      ]
-    };
-  }
-});
+        'Regular Updates',
+      ],
+    }
+  },
+})
 </script>
 
-
 <style scoped>
-
 .temperature-graph {
   height: 100px;
 }
-
 </style>

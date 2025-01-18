@@ -1,8 +1,6 @@
 <template>
   <v-card class="ma-2">
-    <v-card-title class="d-flex align-center text-subtitle-1">
-      Control Heaters
-    </v-card-title>
+    <v-card-title class="d-flex align-center text-subtitle-1"> Control Heaters </v-card-title>
     <v-card-text>
       <v-list>
         <v-list-item>
@@ -57,38 +55,38 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { usePrinterStore } from '@/stores/printerStore';
+import { defineComponent } from 'vue'
+import { usePrinterStore } from '@/stores/printerStore'
 
 export default defineComponent({
   name: 'DemoHeaterControl',
   data() {
     return {
-      printerStore: usePrinterStore()
-    };
+      printerStore: usePrinterStore(),
+    }
   },
   computed: {
     isPrinting(): boolean {
-      return this.printerStore.printing;
-    }
+      return this.printerStore.printing
+    },
   },
   methods: {
     updateToolTarget(value: string) {
-      let numValue = Number(value);
-      if (isNaN(numValue)) numValue = 0;
-      if (numValue < 0) numValue = 0;
-      if (numValue > 500) numValue = 500;
-      this.printerStore.setToolTarget(numValue);
+      let numValue = Number(value)
+      if (isNaN(numValue)) numValue = 0
+      if (numValue < 0) numValue = 0
+      if (numValue > 500) numValue = 500
+      this.printerStore.setToolTarget(numValue)
     },
     updateBedTarget(value: string) {
-      let numValue = Number(value);
-      if (isNaN(numValue)) numValue = 0;
-      if (numValue < 0) numValue = 0;
-      if (numValue > 500) numValue = 500;
-      this.printerStore.setBedTarget(numValue);
+      let numValue = Number(value)
+      if (isNaN(numValue)) numValue = 0
+      if (numValue < 0) numValue = 0
+      if (numValue > 500) numValue = 500
+      this.printerStore.setBedTarget(numValue)
     },
   },
-});
+})
 </script>
 
 <style scoped>

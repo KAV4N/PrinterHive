@@ -2,23 +2,13 @@
   <v-card class="ma-2 pa-4">
     <v-card-title class="text-subtitle-1">
       Machine Movement
-      <v-btn 
-        variant="text" 
-        color="primary" 
-        class="ml-4" 
-        @click="homeAll"
-        :disabled="isPrinting"
-      >
+      <v-btn variant="text" color="primary" class="ml-4" @click="homeAll" :disabled="isPrinting">
         Home All
       </v-btn>
     </v-card-title>
     <v-card-text>
       <div class="d-flex flex-column">
-        <div
-          v-for="axis in axes"
-          :key="axis"
-          class="d-flex flex-column flex-md-row mb-4"
-        >
+        <div v-for="axis in axes" :key="axis" class="d-flex flex-column flex-md-row mb-4">
           <v-btn
             color="warning"
             class="mb-2 w-100 w-md-auto"
@@ -58,40 +48,39 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { usePrinterStore } from '@/stores/printerStore';
+import { defineComponent } from 'vue'
+import { usePrinterStore } from '@/stores/printerStore'
 
-type Axis = 'x' | 'y' | 'z';
+type Axis = 'x' | 'y' | 'z'
 
 export default defineComponent({
   name: 'DemoMovementControl',
   data() {
     return {
       axes: ['x', 'y', 'z'] as Axis[],
-      printerStore: usePrinterStore()
-    };
+      printerStore: usePrinterStore(),
+    }
   },
   computed: {
     isPrinting(): boolean {
-      return this.printerStore.printing;
-    }
-
+      return this.printerStore.printing
+    },
   },
   methods: {
     moveAxis(axis: Axis, value: number) {
-      if (this.isPrinting) return;
-      this.printerStore.updatePosition(axis, value);
+      if (this.isPrinting) return
+      this.printerStore.updatePosition(axis, value)
     },
 
     homeAxis(axis: Axis) {
-      if (this.isPrinting) return;
-      this.printerStore.updatePosition(axis, -this.printerStore.position[axis]);
+      if (this.isPrinting) return
+      this.printerStore.updatePosition(axis, -this.printerStore.position[axis])
     },
 
     homeAll() {
-      if (this.isPrinting) return;
-      this.printerStore.resetPosition();
-    }
-  }
-});
+      if (this.isPrinting) return
+      this.printerStore.resetPosition()
+    },
+  },
+})
 </script>

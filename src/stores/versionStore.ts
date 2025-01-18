@@ -1,121 +1,130 @@
-import { defineStore } from 'pinia';
-import axios from '@/plugins/axios';
-import type { Version, VersionState } from '@/types/version';
+import { defineStore } from 'pinia'
+import axios from '@/plugins/axios'
+import type { Version, VersionState, ApiResponse } from '@/types/version'
 
-const initialRequestState = {
-  loading: false,
-  error: null,
-};
+const API_ENDPOINTS = {
+  LATEST: '/api/versions.php?endpoint=latest',
+  PREVIOUS: (page: number) => `/api/versions.php?endpoint=previous&page=${page}`,
+  VERSION: (slug: string) => `/api/versions.php?endpoint=version&slug=${slug}`,
+} as const
+
+const formatError = (error: any, defaultMessage: string): string => {
+  if (error.response?.status === 404) return 'Version not found'
+  return error.name ? `${error.name}: ${error.message}` : defaultMessage
+}
 
 export const useVersionStore = defineStore('version', {
   state: (): VersionState => ({
     latestVersion: {
       data: null,
-      request: { ...initialRequestState },
+      error: null,
     },
     previousVersions: {
       data: [],
-      request: { ...initialRequestState },
+      error: null,
       currentPage: 1,
       hasMore: false,
     },
     currentVersion: {
       data: null,
-      request: { ...initialRequestState },
+      error: null,
     },
+    initialized: false,
+    loading: false,
   }),
 
+  getters: {
+    isLoading(): boolean {
+      return this.loading
+    },
+
+    canLoadMore(): boolean {
+      return !this.loading && this.previousVersions.hasMore
+    },
+  },
+
   actions: {
-    initializeVersions() {
-      this.fetchLatestVersion();
-      this.fetchPreviousVersions();
+    async initializeVersions() {
+      if (this.initialized && this.latestVersion.data) return
+
+      await this.fetchLatestVersion()
+      if (this.previousVersions.data.length === 0) {
+        await this.fetchPreviousVersions(true)
+      }
+      this.initialized = true
     },
 
     async fetchLatestVersion() {
-      this.latestVersion.request.loading = true;
-      this.latestVersion.request.error = null;
+      if (this.loading) return
+
+      this.loading = true
+      this.latestVersion.error = null
 
       try {
-        const response = await axios.get<{ data: Version }>(
-          '/api/versions.php?endpoint=latest'
-        );
-        this.latestVersion.data = response.data.data;
+        const { data } = await axios.get<ApiResponse<Version>>(API_ENDPOINTS.LATEST)
+        this.latestVersion.data = data.data
       } catch (error: any) {
-        this.latestVersion.request.error = error.name 
-          ? `${error.name}: ${error.message}`
-          : 'Failed to load latest version';
+        this.latestVersion.error = formatError(error, 'Failed to load latest version')
       } finally {
-        this.latestVersion.request.loading = false;
+        this.loading = false
       }
     },
 
     async fetchPreviousVersions(reset = true) {
+      if (this.loading) return
+
       if (reset) {
-        this.previousVersions.data = [];
-        this.previousVersions.currentPage = 1;
+        this.previousVersions.data = []
+        this.previousVersions.currentPage = 1
       }
 
-      this.previousVersions.request.loading = true;
-      this.previousVersions.request.error = null;
+      this.loading = true
+      this.previousVersions.error = null
 
       try {
-        const response = await axios.get<{ data: Version[]; meta: { hasMore: boolean } }>(
-          `/api/versions.php?endpoint=previous&page=${this.previousVersions.currentPage}`
-        );
-        
-        if (reset) {
-          this.previousVersions.data = response.data.data;
-        } else {
-          this.previousVersions.data = [...this.previousVersions.data, ...response.data.data];
-        }
-        
-        this.previousVersions.hasMore = response.data.meta.hasMore;
+        const { data } = await axios.get<ApiResponse<Version[]>>(
+          API_ENDPOINTS.PREVIOUS(this.previousVersions.currentPage),
+        )
+
+        this.previousVersions.data = reset
+          ? data.data
+          : [...this.previousVersions.data, ...data.data]
+        this.previousVersions.hasMore = data.meta?.hasMore ?? false
       } catch (error: any) {
-        this.previousVersions.request.error = error.name 
-          ? `${error.name}: ${error.message}`
-          : 'Failed to load previous versions';
-        if (!reset) {
-          this.previousVersions.currentPage--;
-        }
+        this.previousVersions.error = formatError(error, 'Failed to load previous versions')
+        if (!reset) this.previousVersions.currentPage--
       } finally {
-        this.previousVersions.request.loading = false;
+        this.loading = false
       }
     },
 
     async fetchVersionBySlug(slug: string) {
-      this.currentVersion.request.loading = true;
-      this.currentVersion.request.error = null;
-      this.currentVersion.data = null;
+      if (this.loading) return
+
+      this.loading = true
+      this.currentVersion.error = null
+      this.currentVersion.data = null
 
       try {
-        const response = await axios.get<{ data: Version }>(
-          `/api/versions.php?endpoint=version&slug=${slug}`
-      );
-        this.currentVersion.data = response.data.data;
+        const { data } = await axios.get<ApiResponse<Version>>(API_ENDPOINTS.VERSION(slug))
+        this.currentVersion.data = data.data
       } catch (error: any) {
-        this.currentVersion.request.error = error.response?.status === 404
-          ? 'Version not found'
-          : error.name 
-            ? `${error.name}: ${error.message}`
-            : 'Failed to load version details';
+        this.currentVersion.error = formatError(error, 'Failed to load version details')
       } finally {
-        this.currentVersion.request.loading = false;
+        this.loading = false
       }
     },
 
     async loadMore() {
-      if (
-        this.previousVersions.request.loading || 
-        !this.previousVersions.hasMore
-      ) return;
+      if (!this.canLoadMore) return
 
-      this.previousVersions.currentPage++;
-      await this.fetchPreviousVersions(false);
+      this.previousVersions.currentPage++
+      await this.fetchPreviousVersions(false)
     },
 
     clearCurrentVersion() {
-      this.currentVersion.data = null;
-      this.currentVersion.request.error = null;
-    }
-  }
-});
+      this.currentVersion.data = null
+      this.currentVersion.error = null
+    },
+  },
+})

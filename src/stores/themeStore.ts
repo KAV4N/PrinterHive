@@ -6,9 +6,9 @@ export const useThemeStore = defineStore('theme', {
       localStorage.setItem('theme', 'dark')
     }
     const savedTheme = localStorage.getItem('theme')
-    
+
     return {
-      isLight: savedTheme === 'light'
+      isLight: savedTheme === 'light',
     }
   },
   actions: {
@@ -16,6 +16,6 @@ export const useThemeStore = defineStore('theme', {
       this.isLight = !this.isLight
       const newTheme = this.isLight ? 'light' : 'dark'
       localStorage.setItem('theme', newTheme)
-    }
-  }
+    },
+  },
 })

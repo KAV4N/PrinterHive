@@ -8,12 +8,7 @@
       <v-col cols="12" class="text-center">
         <h2 class="text-h3 font-weight-bold mb-8">Why Choose PrinterHive?</h2>
         <v-row>
-          <v-col
-            v-for="(value, index) in valuePropositions"
-            :key="index"
-            cols="12"
-            md="4"
-          >
+          <v-col v-for="(value, index) in valuePropositions" :key="index" cols="12" md="4">
             <features-value-proposition-card :value="value" />
           </v-col>
         </v-row>
@@ -25,12 +20,7 @@
       <v-col cols="12">
         <h2 class="text-h3 font-weight-bold text-center mb-8">Core Features</h2>
         <v-row>
-          <v-col
-            v-for="(feature, index) in mainFeatures"
-            :key="index"
-            cols="12"
-            md="4"
-          >
+          <v-col v-for="(feature, index) in mainFeatures" :key="index" cols="12" md="4">
             <features-card :feature="feature" />
           </v-col>
         </v-row>
@@ -40,9 +30,7 @@
     <!-- Advanced Features Timeline -->
     <v-row class="mb-16">
       <v-col cols="12">
-        <h2 class="text-h3 font-weight-bold text-center mb-8">
-          Advanced Capabilities
-        </h2>
+        <h2 class="text-h3 font-weight-bold text-center mb-8">Advanced Capabilities</h2>
         <features-advanced-timeline :features="advancedFeatures" />
       </v-col>
     </v-row>
@@ -59,10 +47,7 @@
       <v-col cols="12">
         <h2 class="text-h3 font-weight-bold text-center mb-8">Integration Partners</h2>
         <v-slide-group show-arrows>
-          <v-slide-group-item
-            v-for="(partner, index) in integrationPartners"
-            :key="index"
-          >
+          <v-slide-group-item v-for="(partner, index) in integrationPartners" :key="index">
             <v-card class="ma-4" width="200" height="150" variant="outlined">
               <v-img :src="partner.logo" height="100" contain class="pa-4"></v-img>
               <v-card-text class="text-center pt-0">
@@ -109,8 +94,12 @@
     <v-row class="mb-16">
       <v-col cols="12" class="text-center">
         <v-card class="pa-8 bg-primary">
-          <h2 class="text-h3 font-weight-bold mb-4">Ready to Transform Your 3D Printing Workflow?</h2>
-          <p class="text-h6 mb-8">Join thousands of satisfied users who have revolutionized their 3D printing management</p>
+          <h2 class="text-h3 font-weight-bold mb-4">
+            Ready to Transform Your 3D Printing Workflow?
+          </h2>
+          <p class="text-h6 mb-8">
+            Join thousands of satisfied users who have revolutionized their 3D printing management
+          </p>
           <v-row justify="center" align="center">
             <v-col cols="12" md="4">
               <v-btn
@@ -125,12 +114,7 @@
               </v-btn>
             </v-col>
             <v-col cols="12" md="4">
-              <v-btn
-                block
-                size="x-large"
-                variant="outlined"
-                to="/demo"
-              >
+              <v-btn block size="x-large" variant="outlined" to="/demo">
                 Try Demo
                 <v-icon right class="ml-2">mdi-play</v-icon>
               </v-btn>
@@ -143,12 +127,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import FeaturesHeroSection from '@/components/FeaturesHeroSection.vue';
-import FeaturesValuePropositionCard from '@/components/FeaturesValuePropositionCard.vue';
-import FeaturesCard from '@/components/FeaturesCard.vue';
-import FeaturesAdvancedTimeline from '@/components/FeaturesAdvancedTimeline.vue';
-import FeaturesStatisticsCard from '@/components/FeaturesStatisticsCard.vue';
+import { defineComponent } from 'vue'
+import FeaturesHeroSection from '@/components/FeaturesHeroSection.vue'
+import FeaturesValuePropositionCard from '@/components/FeaturesValuePropositionCard.vue'
+import FeaturesCard from '@/components/FeaturesCard.vue'
+import FeaturesAdvancedTimeline from '@/components/FeaturesAdvancedTimeline.vue'
+import FeaturesStatisticsCard from '@/components/FeaturesStatisticsCard.vue'
 
 export default defineComponent({
   name: 'FeaturesView',
@@ -157,67 +141,72 @@ export default defineComponent({
     FeaturesValuePropositionCard,
     FeaturesCard,
     FeaturesAdvancedTimeline,
-    FeaturesStatisticsCard
+    FeaturesStatisticsCard,
   },
   data() {
     return {
       valuePropositions: [
         {
           title: 'Enterprise Features',
-          description: 'Get enterprise-grade features completely free, including advanced monitoring, analytics, and remote control capabilities.',
+          description:
+            'Get enterprise-grade features completely free, including advanced monitoring, analytics, and remote control capabilities.',
           icon: 'mdi-star',
-          color: 'primary'
+          color: 'primary',
         },
         {
           title: 'Open Source',
-          description: 'Built on open-source principles, ensuring transparency, community-driven development, and unlimited customization potential.',
+          description:
+            'Built on open-source principles, ensuring transparency, community-driven development, and unlimited customization potential.',
           icon: 'mdi-open-source-initiative',
-          color: 'secondary'
+          color: 'secondary',
         },
         {
           title: 'Community Powered',
-          description: 'Join a thriving community of 3D printing enthusiasts and professionals sharing knowledge and resources.',
+          description:
+            'Join a thriving community of 3D printing enthusiasts and professionals sharing knowledge and resources.',
           icon: 'mdi-account-group',
-          color: 'info'
-        }
+          color: 'info',
+        },
       ],
       mainFeatures: [
         {
           title: 'Intelligent Fleet Management',
-          description: 'Manage your entire printer fleet from a single dashboard with smart automation and scheduling.',
-          image: '@/assets/fleet-management.jpg',
+          description:
+            'Manage your entire printer fleet from a single dashboard with smart automation and scheduling.',
+          image: '../public/img/features/fleet-management.jpg',
           color: 'primary',
           subFeatures: [
             'Smart queue management',
             'Automated job distribution',
             'Printer health monitoring',
-            'Real-time status updates'
-          ]
+            'Real-time status updates',
+          ],
         },
         {
           title: 'Advanced Analytics Suite',
-          description: 'Make data-driven decisions with comprehensive analytics and reporting tools.',
-          image: '@/assets/analytics.jpg',
+          description:
+            'Make data-driven decisions with comprehensive analytics and reporting tools.',
+          image: '../public/img/features/analytics.jpg',
           color: 'secondary',
           subFeatures: [
             'Success rate tracking',
             'Cost analysis',
             'Performance metrics',
-            'Custom reporting'
-          ]
+            'Custom reporting',
+          ],
         },
         {
           title: 'AI-Powered Quality Control',
           description: 'Ensure print quality with AI-powered monitoring and failure detection.',
-          image: '@/assets/ai-quality.jpg',
+          image: '../public/img/features/ai-quality.jpg',
           color: 'info',
           subFeatures: [
             'Real-time failure detection',
             'Automatic print pausing',
             'Quality analysis',
-            'Defect prediction'
-          ]
-        }
+            'Defect prediction',
+          ],
+        },
       ],
       advancedFeatures: [
         {
@@ -226,7 +215,7 @@ export default defineComponent({
           description: 'Take complete control of your printers from anywhere in the world.',
           icon: 'mdi-remote',
           color: 'primary',
-          tags: ['Remote Access', 'Security', 'Multi-User']
+          tags: ['Remote Access', 'Security', 'Multi-User'],
         },
         {
           category: 'AI',
@@ -234,7 +223,7 @@ export default defineComponent({
           description: 'Leverage AI for predictive maintenance and quality optimization.',
           icon: 'mdi-brain',
           color: 'secondary',
-          tags: ['Predictive Maintenance', 'Quality Optimization', 'Machine Learning']
+          tags: ['Predictive Maintenance', 'Quality Optimization', 'Machine Learning'],
         },
         {
           category: 'Analytics',
@@ -242,7 +231,7 @@ export default defineComponent({
           description: 'Comprehensive analytics and reporting for data-driven decision making.',
           icon: 'mdi-chart-box',
           color: 'info',
-          tags: ['Reports', 'Dashboards', 'Insights']
+          tags: ['Reports', 'Dashboards', 'Insights'],
         },
         {
           category: 'Integration',
@@ -250,91 +239,91 @@ export default defineComponent({
           description: 'Seamless integration with popular slicing software and workflow tools.',
           icon: 'mdi-connection',
           color: 'success',
-          tags: ['API', 'Plugins', 'Workflow']
-        }
+          tags: ['API', 'Plugins', 'Workflow'],
+        },
       ],
       integrationPartners: [
         {
           name: 'Cura',
-          logo: '@/assets/partners/cura-logo.png'
+          logo: '../public/img/features/cura.png',
         },
         {
           name: 'PrusaSlicer',
-          logo: '@/assets/partners/prusa-logo.png'
+          logo: '../public/img/features/prusaslicer.jpg',
         },
         {
           name: 'OctoPrint',
-          logo: '@/assets/partners/octoprint-logo.png'
+          logo: '../public/img/features/octoprint.jpg',
         },
         {
           name: 'Simplify3D',
-          logo: '@/assets/partners/simplify3d-logo.png'
-        }
+          logo: '../public/img/features/simplify.jpg',
+        },
       ],
       statistics: [
         {
           value: '99.9%',
           label: 'Uptime',
           subtext: 'Reliable operation',
-          color: 'text-primary'
+          color: 'text-primary',
         },
         {
           value: '50%',
           label: 'Cost Reduction',
           subtext: 'Average savings reported',
-          color: 'text-secondary'
+          color: 'text-secondary',
         },
         {
           value: '2x',
           label: 'Productivity',
           subtext: 'Efficiency increase',
-          color: 'text-info'
+          color: 'text-info',
         },
         {
           value: '24/7',
           label: 'Monitoring',
           subtext: 'Continuous operation',
-          color: 'text-success'
-        }
+          color: 'text-success',
+        },
       ],
       comparisons: [
         {
           feature: 'Remote Control',
           printerhive: true,
-          others: true
+          others: true,
         },
         {
           feature: 'AI-Powered Monitoring',
           printerhive: true,
-          others: false
+          others: false,
         },
         {
           feature: 'Unlimited Printers',
           printerhive: true,
-          others: false
+          others: false,
         },
         {
           feature: 'Open Source',
           printerhive: true,
-          others: false
+          others: false,
         },
         {
           feature: 'Free Forever',
           printerhive: true,
-          others: false
+          others: false,
         },
         {
           feature: 'Community Support',
           printerhive: true,
-          others: true
+          others: true,
         },
         {
           feature: 'Custom Integrations',
           printerhive: true,
-          others: false
-        }
-      ]
-    };
-  }
-});
+          others: false,
+        },
+      ],
+    }
+  },
+})
 </script>

@@ -24,16 +24,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, type PropType } from 'vue';
-import type { MainFeature } from '@/types/features';
+import { defineComponent, type PropType } from 'vue'
+import type { MainFeature } from '@/types/features'
 
 export default defineComponent({
   name: 'FeaturesCard',
   props: {
     feature: {
       type: Object as PropType<MainFeature>,
-      required: true
-    }
-  }
-});
+      required: true,
+    },
+  },
+})
 </script>

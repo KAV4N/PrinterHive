@@ -4,9 +4,7 @@
       <h3>PrinterHive</h3>
       <v-row class="mt-8 pt-8 border-t">
         <v-col cols="12" sm="6" class="text-center text-sm-start">
-          <div class="text-body-2">
-            © {{ currentYear }} PrinterHive. All rights reserved.
-          </div>
+          <div class="text-body-2">© {{ currentYear }} PrinterHive. All rights reserved.</div>
         </v-col>
         <v-col cols="12" sm="6" class="text-center text-sm-end">
           <v-btn
@@ -35,16 +33,16 @@ export default {
         { icon: 'mdi-github' },
         { icon: 'mdi-twitter' },
         { icon: 'mdi-instagram' },
-        { icon: 'mdi-youtube' }
-      ]
+        { icon: 'mdi-youtube' },
+      ],
     }
   },
 
   computed: {
     currentYear() {
       return new Date().getFullYear()
-    }
-  }
+    },
+  },
 }
 </script>
 
