@@ -1,5 +1,7 @@
 # PrinterHive
 
+PrinterHive, 3D printer control center/dashboard website idea created with Vue.
+
 ## Project Photo Preview
 
 <img src="https://github.com/KAV4N/PrinterHive/blob/4f5ac8e060e6b4db139d828d17a0da8bbfc45981/img/home.png">
