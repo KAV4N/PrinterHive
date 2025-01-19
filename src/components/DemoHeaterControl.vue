@@ -13,14 +13,13 @@
               <span class="mr-2">{{ printerStore.toolTemperature.toFixed(1) }}°C</span>
               <div class="text-center">
                 <v-text-field
-                  :model-value="printerStore.toolTarget"
+                  v-model="toolTarget"
                   type="number"
                   density="compact"
                   hide-details
                   class="temp-input"
                   min="0"
                   max="500"
-                  @update:model-value="updateToolTarget"
                   :disabled="isPrinting"
                 ></v-text-field>
               </div>
@@ -36,14 +35,13 @@
             <div class="d-flex align-center">
               <span class="mr-2">{{ printerStore.bedTemperature.toFixed(1) }}°C</span>
               <v-text-field
-                :model-value="printerStore.bedTarget"
+                v-model="bedTarget"
                 type="number"
                 density="compact"
                 hide-details
                 class="temp-input"
                 min="0"
                 max="500"
-                @update:model-value="updateBedTarget"
                 :disabled="isPrinting"
               ></v-text-field>
             </div>
@@ -69,21 +67,29 @@ export default defineComponent({
     isPrinting(): boolean {
       return this.printerStore.printing
     },
-  },
-  methods: {
-    updateToolTarget(value: string) {
-      let numValue = Number(value)
-      if (isNaN(numValue)) numValue = 0
-      if (numValue < 0) numValue = 0
-      if (numValue > 500) numValue = 500
-      this.printerStore.setToolTarget(numValue)
+    toolTarget: {
+      get(): number {
+        return this.printerStore.toolTarget
+      },
+      set(value: string | number) {
+        let numValue = Number(value)
+        if (isNaN(numValue)) numValue = 0
+        if (numValue < 0) numValue = 0
+        if (numValue > 500) numValue = 500
+        this.printerStore.setToolTarget(numValue)
+      },
     },
-    updateBedTarget(value: string) {
-      let numValue = Number(value)
-      if (isNaN(numValue)) numValue = 0
-      if (numValue < 0) numValue = 0
-      if (numValue > 500) numValue = 500
-      this.printerStore.setBedTarget(numValue)
+    bedTarget: {
+      get(): number {
+        return this.printerStore.bedTarget
+      },
+      set(value: string | number) {
+        let numValue = Number(value)
+        if (isNaN(numValue)) numValue = 0
+        if (numValue < 0) numValue = 0
+        if (numValue > 500) numValue = 500
+        this.printerStore.setBedTarget(numValue)
+      },
     },
   },
 })

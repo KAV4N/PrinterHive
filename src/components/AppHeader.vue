@@ -21,13 +21,7 @@
         </v-col>
 
         <v-col :cols="$vuetify.display.smAndDown" class="d-flex justify-end align-center">
-          <v-switch
-            v-if="$vuetify.display.mdAndUp"
-            :model-value="themeStore?.isLight"
-            @update:model-value="toggleTheme"
-            hide-details
-            inset
-          >
+          <v-switch v-if="$vuetify.display.mdAndUp" v-model="theme" hide-details inset>
             <template v-slot:prepend>
               <v-icon :icon="themeStore?.isLight ? 'mdi-weather-sunny' : 'mdi-weather-night'" />
             </template>
@@ -55,12 +49,7 @@
       </v-list-item>
 
       <v-list-item>
-        <v-switch
-          :model-value="themeStore?.isLight"
-          @update:model-value="toggleTheme"
-          hide-details
-          inset
-        >
+        <v-switch v-model="theme" hide-details inset>
           <template v-slot:prepend>
             <v-icon :icon="themeStore?.isLight ? 'mdi-weather-sunny' : 'mdi-weather-night'" />
           </template>
@@ -69,6 +58,7 @@
     </v-list>
   </v-navigation-drawer>
 </template>
+
 <script>
 import { useThemeStore } from '@/stores/themeStore'
 
@@ -87,14 +77,21 @@ export default {
   created() {
     this.updateVuetifyTheme()
   },
+  computed: {
+    theme: {
+      get() {
+        return this.themeStore?.isLight
+      },
+      set() {
+        this.themeStore.toggleTheme()
+        this.updateVuetifyTheme()
+      },
+    },
+  },
   methods: {
     updateVuetifyTheme() {
       const themeName = this.themeStore.isLight ? 'LightPrinterHiveTheme' : 'PrinterHiveTheme'
       this.$vuetify.theme.global.name = themeName
-    },
-    toggleTheme() {
-      this.themeStore.toggleTheme()
-      this.updateVuetifyTheme()
     },
   },
 }

@@ -1,4 +1,3 @@
-// views/FeaturesView.vue
 <template>
   <v-container>
     <features-hero-section />

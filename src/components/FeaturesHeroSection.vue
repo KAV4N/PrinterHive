@@ -1,5 +1,5 @@
 <template>
-  <v-parallax src="@/assets/3d-printing-hero.jpg" class="rounded-lg mb-16" height="400">
+  <v-parallax class="rounded-lg mb-16" height="400">
     <v-row class="align-center fill-height">
       <v-col cols="12" class="text-center">
         <h1 class="text-h2 font-weight-bold mb-4">

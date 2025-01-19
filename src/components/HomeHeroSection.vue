@@ -1,7 +1,7 @@
 <template>
   <v-row no-gutters>
     <v-col cols="12">
-      <v-parallax src="@/assets/hero-bg.jpg" height="100vh">
+      <v-parallax height="100vh">
         <v-container class="fill-height">
           <v-row align="center" justify="center">
             <v-col cols="12" md="8" class="text-center">
